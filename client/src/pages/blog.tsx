@@ -3,8 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, User, Moon, Sun, Settings } from "lucide-react";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
 import { useTheme } from "@/components/theme-provider";
+import { Navigation } from "@/components/navigation";
 import type { BlogPost } from "@shared/schema";
 
 function ThemeToggle() {
@@ -157,6 +158,7 @@ function formatDate(date: Date | string): string {
 }
 
 export default function Blog() {
+  const [, setLocation] = useLocation();
   const { data: dbPosts = [], isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog", "published"],
     queryFn: async () => {
@@ -176,20 +178,18 @@ export default function Blog() {
     return (
       <div className="min-h-screen bg-background">
         <SEOHead />
-        <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-          <div className="max-w-4xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
-            <Button 
-              variant="ghost" 
-              onClick={() => setSelectedPost(null)}
-              aria-label="Go back to blog listing"
-              data-testid="button-back"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
-              Back to Blog
-            </Button>
-            <ThemeToggle />
-          </div>
-        </header>
+        <Navigation />
+        <div className="max-w-4xl mx-auto px-5 py-4">
+          <Button 
+            variant="ghost" 
+            onClick={() => setSelectedPost(null)}
+            aria-label="Go back to blog listing"
+            data-testid="button-back"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
+            Back to Blog
+          </Button>
+        </div>
         <main className="max-w-4xl mx-auto px-5 py-12">
           <article>
             <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-[#667eea]/10 to-[#764ba2]/10 text-[#667eea] mb-6">
@@ -228,32 +228,23 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead />
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
-          <Link href="/">
-            <Button variant="ghost" aria-label="Go to homepage" data-testid="button-home">
-              <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
-              Home
-            </Button>
-          </Link>
-          <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2]">
-            Instatrainme Blog
-          </h1>
-          <div className="flex items-center gap-2">
-            <Link href="/admin/blog">
-              <Button variant="ghost" size="icon" aria-label="Manage blog posts" data-testid="button-admin">
-                <Settings className="w-4 h-4" />
-              </Button>
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <Navigation />
       <main className="max-w-6xl mx-auto px-5 py-12">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" data-testid="text-blog-title">
-            Fitness Tips & News
-          </h2>
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="text-blog-title">
+              Fitness Tips & News
+            </h2>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              aria-label="Manage blog posts" 
+              onClick={() => setLocation("/admin/blog")}
+              data-testid="button-admin"
+            >
+              <Settings className="w-4 h-4" />
+            </Button>
+          </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Expert advice, training tips, and the latest updates from the fitness world.
           </p>

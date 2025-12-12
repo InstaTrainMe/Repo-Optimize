@@ -17,6 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Link } from "wouter";
+import { Navigation } from "@/components/navigation";
 
 function useInView(options = {}) {
   const [isInView, setIsInView] = useState(false);
@@ -970,6 +971,7 @@ function SocialShareButtons() {
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
       <SocialShareButtons />
       <HeroSection />
       <BenefitsSection />

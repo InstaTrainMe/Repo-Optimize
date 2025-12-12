@@ -19,9 +19,11 @@ export type User = typeof users.$inferSelect;
 
 export const partnerSubmissions = pgTable("partner_submissions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
+  companyName: text("company_name").notNull(),
+  contactName: text("contact_name").notNull(),
   email: text("email").notNull(),
-  type: text("type").notNull(),
+  organizationType: text("organization_type").notNull(),
+  message: text("message"),
 });
 
 export const insertPartnerSchema = createInsertSchema(partnerSubmissions).omit({

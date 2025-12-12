@@ -50,7 +50,11 @@ export class MemStorage implements IStorage {
 
   async createPartner(insertPartner: InsertPartner): Promise<Partner> {
     const id = randomUUID();
-    const partner: Partner = { ...insertPartner, id };
+    const partner: Partner = { 
+      ...insertPartner, 
+      id,
+      message: insertPartner.message ?? null 
+    };
     this.partners.set(id, partner);
     return partner;
   }

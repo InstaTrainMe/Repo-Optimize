@@ -8,7 +8,14 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useTheme } from "@/components/theme-provider";
-import { Target, TrendingUp, DollarSign, Download, Users, Calendar, Dumbbell, Heart, Zap, MapPin, Mail, Building2, User, ChevronRight, Twitter, MessageCircle, Moon, Sun, Instagram, Facebook } from "lucide-react";
+import { Target, TrendingUp, DollarSign, Download, Users, Calendar, Dumbbell, Heart, Zap, MapPin, Mail, Building2, User, ChevronRight, Twitter, MessageCircle, Moon, Sun, Instagram, Facebook, Briefcase, ExternalLink, HelpCircle, X } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Link } from "wouter";
 
 function useInView(options = {}) {
@@ -78,25 +85,92 @@ function HeroSection() {
           Connect with certified trainers and gyms instantly. Book on-demand sessions, track your progress, and achieve your fitness goals.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button 
-            size="lg"
-            className="bg-white text-[#667eea] font-semibold px-8 rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
-            aria-label="Download the InstaTrainMe app"
-            data-testid="button-download-app"
-          >
-            <Download className="w-5 h-5 mr-2" aria-hidden="true" />
-            Download App
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button 
+                size="lg"
+                className="bg-white text-[#667eea] font-semibold px-8 rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
+                aria-label="Get started with InstaTrainMe"
+                data-testid="button-get-started"
+              >
+                <Download className="w-5 h-5 mr-2" aria-hidden="true" />
+                Get Started
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-2xl">
+              <DialogHeader>
+                <DialogTitle className="text-center text-2xl font-bold">Choose Your Path</DialogTitle>
+              </DialogHeader>
+              <div className="grid md:grid-cols-2 gap-6 mt-4">
+                <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-[#1a1f2e] to-[#2a2f3e] p-6 text-white">
+                  <div className="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJhIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
+                  <div className="relative z-10">
+                    <h3 className="text-lg font-semibold mb-2">For Users</h3>
+                    <p className="text-xl font-bold mb-4">Start my Fitness Journey</p>
+                    <p className="text-sm text-white/70 mb-6">Are You a User?</p>
+                    <div className="flex flex-col gap-3">
+                      <a 
+                        href="https://play.google.com/store/apps/details?id=com.instatrainme.app" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-black/40 hover:bg-black/60 rounded-lg px-4 py-2 transition-colors"
+                        data-testid="link-user-google-play"
+                      >
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-8" />
+                      </a>
+                      <a 
+                        href="https://apps.apple.com/us/app/instatrainme/id1554932398" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-black/40 hover:bg-black/60 rounded-lg px-4 py-2 transition-colors"
+                        data-testid="link-user-app-store"
+                      >
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" className="h-8" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-[#3a3020] to-[#4a4030] p-6 text-white">
+                  <div className="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJhIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
+                  <div className="relative z-10">
+                    <h3 className="text-lg font-semibold mb-2">For Trainers</h3>
+                    <p className="text-xl font-bold mb-4">Provide Training with InstaTrainMe<sup className="text-xs">TM</sup></p>
+                    <p className="text-sm text-white/70 mb-6">Are You a Trainer?</p>
+                    <div className="flex flex-col gap-3">
+                      <a 
+                        href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-black/40 hover:bg-black/60 rounded-lg px-4 py-2 transition-colors"
+                        data-testid="link-trainer-google-play"
+                      >
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-8" />
+                      </a>
+                      <a 
+                        href="https://apps.apple.com/us/app/instatrainme-trainer/id1554932565" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-black/40 hover:bg-black/60 rounded-lg px-4 py-2 transition-colors"
+                        data-testid="link-trainer-app-store"
+                      >
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" className="h-8" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
           <Button 
             size="lg"
             variant="outline"
             className="border-2 border-white text-white bg-white/10 backdrop-blur-sm font-semibold px-8 rounded-full transition-all duration-300 hover:scale-105 hover:bg-white/20"
             onClick={() => document.getElementById('partner')?.scrollIntoView({ behavior: 'smooth' })}
-            aria-label="Scroll to partner registration section"
+            aria-label="Scroll to partner section"
             data-testid="button-become-partner"
           >
-            <Users className="w-5 h-5 mr-2" aria-hidden="true" />
-            Become a Partner
+            <Briefcase className="w-5 h-5 mr-2" aria-hidden="true" />
+            Partner With Us
           </Button>
         </div>
       </div>
@@ -282,22 +356,26 @@ function AppShowcaseSection() {
 
 function PartnerFormSection() {
   const { toast } = useToast();
-  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [contactName, setContactName] = useState("");
   const [email, setEmail] = useState("");
-  const [type, setType] = useState("");
+  const [organizationType, setOrganizationType] = useState("");
+  const [message, setMessage] = useState("");
 
   const mutation = useMutation({
-    mutationFn: async (data: { name: string; email: string; type: string }) => {
+    mutationFn: async (data: { companyName: string; contactName: string; email: string; organizationType: string; message?: string }) => {
       return apiRequest("POST", "/api/partners", data);
     },
     onSuccess: () => {
       toast({
-        title: "Application Submitted",
-        description: "Thank you for your interest! We'll be in touch soon.",
+        title: "Partnership Inquiry Submitted",
+        description: "Thank you for your interest! Our team will contact you within 2 business days.",
       });
-      setName("");
+      setCompanyName("");
+      setContactName("");
       setEmail("");
-      setType("");
+      setOrganizationType("");
+      setMessage("");
     },
     onError: () => {
       toast({
@@ -310,15 +388,15 @@ function PartnerFormSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !type) {
+    if (!companyName || !contactName || !email || !organizationType) {
       toast({
         title: "Missing Fields",
-        description: "Please fill in all fields.",
+        description: "Please fill in all required fields.",
         variant: "destructive",
       });
       return;
     }
-    mutation.mutate({ name, email, type });
+    mutation.mutate({ companyName, contactName, email, organizationType, message: message || undefined });
   };
 
   return (
@@ -328,65 +406,93 @@ function PartnerFormSection() {
           className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4"
           data-testid="text-partner-title"
         >
-          Partner With Us
+          Partner With InstaTrainMe
         </h2>
         <p className="text-muted-foreground text-center mb-10">
-          Join our network of certified fitness professionals and grow your client base.
+          Explore collaboration opportunities for corporate wellness, health plans, and strategic partnerships.
         </p>
         <Card className="border-0 shadow-xl">
           <CardContent className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-5" aria-label="Partner registration form">
+            <form onSubmit={handleSubmit} className="space-y-5" aria-label="B2B partnership inquiry form">
               <div className="relative">
-                <Label htmlFor="partner-name" className="sr-only">Your Name</Label>
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
+                <Label htmlFor="partner-company" className="sr-only">Company/Organization Name</Label>
+                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
                 <Input
-                  id="partner-name"
+                  id="partner-company"
                   type="text"
-                  placeholder="Your Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Company/Organization Name"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
                   className="pl-10"
-                  aria-label="Your name"
-                  data-testid="input-partner-name"
+                  aria-label="Company or organization name"
+                  data-testid="input-partner-company"
                 />
               </div>
               <div className="relative">
-                <Label htmlFor="partner-email" className="sr-only">Email Address</Label>
+                <Label htmlFor="partner-contact" className="sr-only">Contact Name</Label>
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
+                <Input
+                  id="partner-contact"
+                  type="text"
+                  placeholder="Your Name"
+                  value={contactName}
+                  onChange={(e) => setContactName(e.target.value)}
+                  className="pl-10"
+                  aria-label="Your name"
+                  data-testid="input-partner-contact"
+                />
+              </div>
+              <div className="relative">
+                <Label htmlFor="partner-email" className="sr-only">Work Email</Label>
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
                 <Input
                   id="partner-email"
                   type="email"
-                  placeholder="Email Address"
+                  placeholder="Work Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10"
-                  aria-label="Email address"
+                  aria-label="Work email address"
                   data-testid="input-partner-email"
                 />
               </div>
               <div>
-                <Label htmlFor="partner-type" className="sr-only">Specialty</Label>
-                <Select value={type} onValueChange={setType}>
-                  <SelectTrigger id="partner-type" aria-label="Select your specialty" data-testid="select-partner-type">
-                    <SelectValue placeholder="Select your specialty" />
+                <Label htmlFor="partner-type" className="sr-only">Organization Type</Label>
+                <Select value={organizationType} onValueChange={setOrganizationType}>
+                  <SelectTrigger id="partner-type" aria-label="Select organization type" data-testid="select-partner-type">
+                    <SelectValue placeholder="Select organization type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="personal-trainer">Personal Trainer</SelectItem>
-                    <SelectItem value="yoga-instructor">Yoga Instructor</SelectItem>
-                    <SelectItem value="nutritionist">Nutritionist</SelectItem>
-                    <SelectItem value="boxing-coach">Boxing / Kickboxing Coach</SelectItem>
-                    <SelectItem value="hiit-specialist">HIIT Specialist</SelectItem>
+                    <SelectItem value="corporate-wellness">Corporate Wellness</SelectItem>
+                    <SelectItem value="health-insurance">Health Insurance</SelectItem>
+                    <SelectItem value="gym-chain">Gym / Fitness Chain</SelectItem>
+                    <SelectItem value="hospitality">Hospitality / Hotels</SelectItem>
+                    <SelectItem value="residential">Residential Communities</SelectItem>
+                    <SelectItem value="strategic-alliance">Strategic Alliance</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+              <div>
+                <Label htmlFor="partner-message" className="sr-only">Message (Optional)</Label>
+                <textarea
+                  id="partner-message"
+                  placeholder="Tell us about your collaboration goals (optional)"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="w-full min-h-[100px] px-4 py-3 rounded-md border border-input bg-background text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  aria-label="Message about collaboration goals"
+                  data-testid="input-partner-message"
+                />
               </div>
               <Button 
                 type="submit" 
                 className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold rounded-xl"
                 disabled={mutation.isPending}
-                aria-label="Submit partner application"
+                aria-label="Submit partnership inquiry"
                 data-testid="button-partner-submit"
               >
-                {mutation.isPending ? "Submitting..." : "Join Now"}
+                {mutation.isPending ? "Submitting..." : "Submit Inquiry"}
               </Button>
             </form>
           </CardContent>
@@ -656,8 +762,8 @@ function Footer() {
   return (
     <footer className="bg-[#1a1f2e] text-white py-16 px-5">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-10 mb-12">
-          <div className="md:col-span-2">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+          <div className="sm:col-span-2 lg:col-span-2">
             <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2]">
               InstaTrainMe
             </h3>
@@ -700,6 +806,28 @@ function Footer() {
               <li><a href="https://instatrainme.com/aboutus" className="hover:text-[#667eea] transition-colors">About Us</a></li>
               <li><a href="https://instatrainme.com/privacypolicy" className="hover:text-[#667eea] transition-colors">Privacy Policy</a></li>
               <li><a href="https://instatrainme.com/termsandconditions" className="hover:text-[#667eea] transition-colors">Terms & Conditions</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4">Resources</h4>
+            <ul className="space-y-3 text-gray-400">
+              <li>
+                <a 
+                  href="https://support.instatrainme.com/support/home" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-[#667eea] transition-colors flex items-center gap-2"
+                  data-testid="link-support"
+                >
+                  <HelpCircle className="w-4 h-4" aria-hidden="true" />
+                  Support Center
+                </a>
+              </li>
+              <li>
+                <Link href="/blog" className="hover:text-[#667eea] transition-colors">
+                  Blog
+                </Link>
+              </li>
             </ul>
           </div>
           <div>

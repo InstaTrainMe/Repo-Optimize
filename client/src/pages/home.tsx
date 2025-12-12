@@ -846,8 +846,8 @@ function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           <div className="sm:col-span-2 lg:col-span-2">
-            <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2]">
-              InstaTrainMe<sup className="text-xs">®</sup>
+            <h3 className="text-3xl font-bold mb-4 text-white">
+              InstaTrainMe<span className="text-xl align-super text-[#667eea]">®</span>
             </h3>
             <p className="text-gray-400 mb-6 leading-relaxed max-w-md">
               Empowering individuals to unlock their full potential. Our fitness platform connects you with certified trainers for personalized guidance on your transformation journey.
@@ -929,11 +929,11 @@ function Footer() {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10 pt-8">
-          <p className="text-gray-400 text-sm">&copy; {new Date().getFullYear()} InstaTrainMe<sup>&reg;</sup> Technologies Inc. All rights reserved.</p>
+          <p className="text-gray-300 text-sm">&copy; {new Date().getFullYear()} InstaTrainMe<span className="text-[#667eea] font-bold">®</span> Technologies Inc. All rights reserved.</p>
           <img 
             src="/hipaa-compliant.png" 
             alt="HIPAA Compliant" 
-            className="h-10 object-contain"
+            className="h-14 object-contain"
             data-testid="img-hipaa-badge"
           />
         </div>

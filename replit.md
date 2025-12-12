@@ -19,6 +19,9 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 - **Support Link**: Added Support Center link (https://support.instatrainme.com/support/home) to footer Resources section
 - **Accessibility**: Added comprehensive aria-labels, keyboard navigation, and form labels for WCAG 2.1 AA compliance
 - **PostgreSQL Database**: Created database for data persistence
+- **About Us Page**: New /about page with Why Choose InstaTrainMe, How It Works (4 steps), and Transform Your Fitness Journey sections
+- **FAQ Page**: New /faq page with 11 accordion-style Q&A items covering common questions about the platform
+- **Site Navigation**: Updated navigation with Home, About, Benefits, FAQ, and Blog links
 
 ## User Preferences
 
@@ -51,7 +54,7 @@ Preferred communication style: Simple, everyday language.
 client/           # React frontend application
   src/
     components/   # UI components (shadcn/ui library)
-    pages/        # Route components (home, blog, blog-admin, not-found)
+    pages/        # Route components (home, about, benefits, faq, blog, blog-admin, not-found)
     hooks/        # Custom React hooks
     lib/          # Utilities and query client
 server/           # Express backend

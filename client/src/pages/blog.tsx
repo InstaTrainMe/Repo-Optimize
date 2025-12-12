@@ -24,10 +24,10 @@ function ThemeToggle() {
 
 function SEOHead() {
   useEffect(() => {
-    document.title = "Blog - Fitness Tips & News | InstaTrainMe";
+    document.title = "Blog - Fitness Tips & News | Instatrainme";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Stay updated with the latest fitness trends, workout tips, nutrition advice, and expert guidance from InstaTrainMe certified trainers.");
+      metaDescription.setAttribute("content", "Stay updated with the latest fitness trends, workout tips, nutrition advice, and expert guidance from Instatrainme certified trainers.");
     }
   }, []);
   return null;
@@ -42,7 +42,7 @@ const blogPosts = [
 
 1. **Set Clear, Achievable Goals**: Break down your larger fitness goals into smaller, manageable milestones. Celebrate each achievement to stay motivated.
 
-2. **Find a Workout Buddy**: Having a partner keeps you accountable and makes workouts more enjoyable. Consider using InstaTrainMe to connect with like-minded fitness enthusiasts.
+2. **Find a Workout Buddy**: Having a partner keeps you accountable and makes workouts more enjoyable. Consider using Instatrainme to connect with like-minded fitness enthusiasts.
 
 3. **Mix Up Your Routine**: Variety prevents boredom. Try different types of workouts - from HIIT to yoga to strength training.
 
@@ -60,7 +60,7 @@ const blogPosts = [
     excerpt: "We tested the top fitness apps to help you find the perfect match for your goals and lifestyle.",
     content: `The fitness app market has exploded in recent years. Here's our comprehensive review of the best personal training apps in 2025:
 
-**InstaTrainMe** - Our Top Pick
+**Instatrainme** - Our Top Pick
 Connect with certified trainers for real-time, personalized coaching. Perfect for those who want human guidance with app convenience.
 
 **Key Features to Look For:**
@@ -70,8 +70,8 @@ Connect with certified trainers for real-time, personalized coaching. Perfect fo
 - Flexible scheduling
 - Secure payment processing
 
-**Why InstaTrainMe Stands Out:**
-Unlike fully automated apps, InstaTrainMe combines technology with real human expertise, giving you the best of both worlds.`,
+**Why Instatrainme Stands Out:**
+Unlike fully automated apps, Instatrainme combines technology with real human expertise, giving you the best of both worlds.`,
     category: "Technology",
     author: "Mike Chen",
     date: "December 8, 2025",
@@ -97,7 +97,7 @@ After a HIIT workout, your body continues burning calories at an elevated rate f
 - Can be done anywhere with no equipment
 
 **Getting Started:**
-Start with 1-2 HIIT sessions per week and gradually increase. Consider working with a certified trainer through InstaTrainMe to ensure proper form and intensity.`,
+Start with 1-2 HIIT sessions per week and gradually increase. Consider working with a certified trainer through Instatrainme to ensure proper form and intensity.`,
     category: "Training",
     author: "Dr. Emily Roberts",
     date: "December 5, 2025",
@@ -127,7 +127,7 @@ Start with 1-2 HIIT sessions per week and gradually increase. Consider working w
 - Don't skip breakfast
 - Plan your meals ahead
 
-Connect with a certified nutritionist through InstaTrainMe for personalized meal planning!`,
+Connect with a certified nutritionist through Instatrainme for personalized meal planning!`,
     category: "Nutrition",
     author: "Lisa Martinez",
     date: "December 1, 2025",
@@ -203,7 +203,7 @@ export default function Blog() {
             </Button>
           </Link>
           <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2]">
-            InstaTrainMe Blog
+            Instatrainme Blog
           </h1>
           <ThemeToggle />
         </div>

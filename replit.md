@@ -2,7 +2,15 @@
 
 ## Overview
 
-InstaTrainMe is a fitness platform landing page that connects users with certified personal trainers and gyms. The application serves as a marketing website with lead generation forms for partners (trainers) and gyms, along with a blog section for fitness content. The platform promotes a mobile app available on the App Store.
+InstaTrainMe is a fitness platform landing page that connects users with certified personal trainers and gyms. The application serves as a marketing website with B2B partnership forms (corporate wellness, health insurance, strategic partnerships), gym registration, newsletter subscription, blog section for fitness content, and mobile app promotion. The platform offers apps for both Users and Trainers on Google Play and App Store.
+
+## Recent Changes (December 2025)
+
+- **B2B Partner Form**: Updated "Partner With Us" section to target enterprise partnerships (corporate wellness, health insurance, gym chains, hospitality, residential communities, strategic alliances) with company-focused fields
+- **Get Started Dialog**: Added modal with separate app download options for Users and Trainers, each with Google Play and App Store links
+- **Support Link**: Added Support Center link (https://support.instatrainme.com/support/home) to footer Resources section
+- **Accessibility**: Added comprehensive aria-labels, keyboard navigation, and form labels for WCAG 2.1 AA compliance
+- **PostgreSQL Database**: Created database for data persistence
 
 ## User Preferences
 
@@ -27,7 +35,7 @@ Preferred communication style: Simple, everyday language.
 ### Data Storage
 - **ORM**: Drizzle ORM configured for PostgreSQL
 - **Schema Location**: `shared/schema.ts` contains all table definitions
-- **Current Tables**: users, partner_submissions, gym_submissions, newsletter_subscriptions
+- **Current Tables**: users, partner_submissions (B2B with companyName, contactName, email, organizationType, message), gym_submissions, newsletter_subscriptions
 - **Development Storage**: MemStorage class provides in-memory fallback when database unavailable
 
 ### Project Structure

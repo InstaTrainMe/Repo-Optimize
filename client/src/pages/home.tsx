@@ -90,7 +90,7 @@ function HeroSection() {
               <Button 
                 size="lg"
                 className="bg-white text-[#667eea] font-semibold px-8 rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
-                aria-label="Get started with Instatrainme"
+                aria-label="Get started with InstaTrainMe"
                 data-testid="button-get-started"
               >
                 <Download className="w-5 h-5 mr-2" aria-hidden="true" />
@@ -134,7 +134,7 @@ function HeroSection() {
                   <div className="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJhIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
                   <div className="relative z-10">
                     <h3 className="text-lg font-semibold mb-2">For Trainers</h3>
-                    <p className="text-xl font-bold mb-4">Provide Training with Instatrainme<sup className="text-xs">®</sup></p>
+                    <p className="text-xl font-bold mb-4">Provide Training with InstaTrainMe<sup className="text-xs">®</sup></p>
                     <p className="text-sm text-white/70 mb-6">Are You a Trainer?</p>
                     <div className="flex flex-col gap-3">
                       <a 
@@ -211,7 +211,7 @@ function BenefitsSection() {
           className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4"
           data-testid="text-benefits-title"
         >
-          Why Instatrainme®?
+          Why InstaTrainMe<sup>&reg;</sup>?
         </h2>
         <p className="text-muted-foreground text-center mb-14 max-w-2xl mx-auto">
           Join thousands of fitness enthusiasts who have transformed their lives with personalized training.
@@ -333,7 +333,7 @@ function AppShowcaseSection() {
               </span>
             </h2>
             <p className="text-muted-foreground mb-8 leading-relaxed">
-              Download Instatrainme® and connect with certified trainers. Book sessions, track your progress, and transform your fitness routine with personalized guidance.
+              Download InstaTrainMe<sup>&reg;</sup> and connect with certified trainers. Book sessions, track your progress, and transform your fitness routine with personalized guidance.
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="https://apps.apple.com/us/app/instatrainme/id6499338812" target="_blank" rel="noopener noreferrer" className="transition-transform hover:scale-105">
@@ -356,28 +356,80 @@ function AppShowcaseSection() {
           </div>
           <div className={`relative transition-all duration-700 delay-200 ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
             <div className="absolute inset-0 bg-gradient-to-br from-[#667eea]/20 to-[#764ba2]/20 rounded-3xl blur-3xl" />
-            <div className="relative bg-gradient-to-br from-[#667eea] to-[#764ba2] rounded-3xl p-8 shadow-2xl">
-              <div className="bg-background rounded-2xl p-4 shadow-inner">
-                <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2]" />
-                  <div>
-                    <p className="font-semibold text-foreground text-sm">Sarah Johnson</p>
-                    <p className="text-xs text-muted-foreground">Personal Trainer</p>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                    <span className="text-sm text-foreground">HIIT Session</span>
-                    <span className="text-xs text-[#667eea] font-medium">Today, 3PM</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                    <span className="text-sm text-foreground">Strength Training</span>
-                    <span className="text-xs text-muted-foreground">Tomorrow</span>
-                  </div>
-                </div>
-              </div>
+            <div className="relative">
+              <img 
+                src="/app-showcase.webp"
+                alt="InstaTrainMe mobile app showing trainer search and booking features"
+                className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
+                loading="lazy"
+                width="400"
+                height="500"
+                data-testid="img-app-showcase"
+              />
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AppFeaturesSection() {
+  const { ref, isInView } = useInView();
+  const features = [
+    { 
+      image: "/app-connect.webp", 
+      title: "Manage Sessions", 
+      description: "View and manage all your training sessions in one place"
+    },
+    { 
+      image: "/app-onsite.webp", 
+      title: "Live Tracking", 
+      description: "Track your trainer's arrival with real-time location updates"
+    },
+    { 
+      image: "/app-session.webp", 
+      title: "Session Details", 
+      description: "Review session information, payments, and join virtual trainings"
+    },
+  ];
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 px-5 bg-muted/30 overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4" data-testid="text-features-title">
+          Powerful Features for Your
+          <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#667eea] to-[#764ba2]">
+            Fitness Success
+          </span>
+        </h2>
+        <p className="text-muted-foreground text-center mb-14 max-w-2xl mx-auto">
+          Everything you need to find, book, and manage your training sessions seamlessly.
+        </p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
+            <div 
+              key={index}
+              className={`text-center transition-all duration-700 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${index * 150}ms` }}
+            >
+              <div className="relative mx-auto mb-6 max-w-[200px]">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#667eea]/10 to-[#764ba2]/10 rounded-3xl blur-xl" />
+                <img 
+                  src={feature.image}
+                  alt={feature.title}
+                  className="relative w-full rounded-2xl shadow-lg"
+                  loading="lazy"
+                  width="200"
+                  height="400"
+                  data-testid={`img-feature-${index + 1}`}
+                />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{feature.title}</h3>
+              <p className="text-muted-foreground text-sm">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -436,7 +488,7 @@ function PartnerFormSection() {
           className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4"
           data-testid="text-partner-title"
         >
-          Partner With Instatrainme®
+          Partner With InstaTrainMe<sup>&reg;</sup>
         </h2>
         <p className="text-muted-foreground text-center mb-10">
           Explore collaboration opportunities for corporate wellness, health plans, and strategic partnerships.
@@ -795,7 +847,7 @@ function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           <div className="sm:col-span-2 lg:col-span-2">
             <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2]">
-              Instatrainme<sup className="text-xs">®</sup>
+              InstaTrainMe<sup className="text-xs">®</sup>
             </h3>
             <p className="text-gray-400 mb-6 leading-relaxed max-w-md">
               Empowering individuals to unlock their full potential. Our fitness platform connects you with certified trainers for personalized guidance on your transformation journey.
@@ -877,7 +929,7 @@ function Footer() {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10 pt-8">
-          <p className="text-gray-500 text-sm">&copy; {new Date().getFullYear()} InstaTrainMe® Technologies Inc. All rights reserved.</p>
+          <p className="text-gray-400 text-sm">&copy; {new Date().getFullYear()} InstaTrainMe<sup>&reg;</sup> Technologies Inc. All rights reserved.</p>
           <img 
             src="/hipaa-compliant.png" 
             alt="HIPAA Compliant" 
@@ -894,7 +946,7 @@ function SocialShareButtons() {
   return (
     <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3">
       <a
-        href="https://twitter.com/share?url=https://instatrainme.com&text=Check out Instatrainme - Find Personal Trainers Near You!"
+        href="https://twitter.com/share?url=https://instatrainme.com&text=Check out InstaTrainMe - Find Personal Trainers Near You!"
         target="_blank"
         rel="noopener noreferrer"
         className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-[#667eea] hover:text-white transition-all group"
@@ -903,7 +955,7 @@ function SocialShareButtons() {
         <Twitter className="w-4 h-4 text-[#667eea] group-hover:text-white" />
       </a>
       <a
-        href="https://wa.me/?text=Check out Instatrainme - Find Personal Trainers Near You! https://instatrainme.com"
+        href="https://wa.me/?text=Check out InstaTrainMe - Find Personal Trainers Near You! https://instatrainme.com"
         target="_blank"
         rel="noopener noreferrer"
         className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all group"
@@ -923,6 +975,7 @@ export default function Home() {
       <BenefitsSection />
       <ServicesSection />
       <AppShowcaseSection />
+      <AppFeaturesSection />
       <PartnerFormSection />
       <GymFormSection />
       <BlogSection />

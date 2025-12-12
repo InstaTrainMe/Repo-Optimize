@@ -244,14 +244,26 @@ function BenefitsSection() {
 const services = [
   { icon: Dumbbell, name: "Personal Training" },
   { icon: Heart, name: "Yoga" },
-  { icon: Zap, name: "HIIT" },
   { icon: Target, name: "Boxing / Kickboxing" },
-  { icon: TrendingUp, name: "Cardio Strength" },
-  { icon: Calendar, name: "Interval Training" }
+  { icon: Zap, name: "HIIT" },
+  { icon: TrendingUp, name: "CrossFit" },
+  { icon: Users, name: "Bootcamp" },
+  { icon: Calendar, name: "Circuit Training" },
+  { icon: Heart, name: "Pilates" },
+  { icon: Zap, name: "Interval Training" },
+  { icon: TrendingUp, name: "Running" },
+  { icon: Target, name: "Martial Arts" },
+  { icon: Users, name: "Sports Instruction" },
+  { icon: Heart, name: "Dance" },
+  { icon: Calendar, name: "Cycling" },
+  { icon: Dumbbell, name: "Barre" },
+  { icon: Heart, name: "Tai Chi" },
 ];
 
 function ServicesSection() {
   const { ref, isInView } = useInView();
+  const [showAll, setShowAll] = useState(false);
+  const displayedServices = showAll ? services : services.slice(0, 8);
 
   return (
     <section ref={ref} className="py-20 md:py-28 px-5 bg-muted/30">
@@ -262,17 +274,23 @@ function ServicesSection() {
         >
           Our Services
         </h2>
-        <p className="text-muted-foreground text-center mb-14 max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-center mb-6 max-w-2xl mx-auto">
           Whatever your fitness goals, we have expert trainers ready to help you succeed.
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {services.map((service, index) => (
+        <p className="text-center mb-14">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#667eea]/10 to-[#764ba2]/10 text-sm font-medium text-[#667eea]">
+            <Zap className="w-4 h-4" />
+            50+ Training Categories Available
+          </span>
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {displayedServices.map((service, index) => (
             <div
               key={service.name}
               className={`group p-6 bg-card rounded-xl text-center transition-all duration-500 hover:-translate-y-1 hover:shadow-lg cursor-pointer border border-border ${
                 isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
-              style={{ transitionDelay: `${index * 80}ms` }}
+              style={{ transitionDelay: `${index * 50}ms` }}
               data-testid={`card-service-${index}`}
             >
               <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-br from-[#667eea]/10 to-[#764ba2]/10 flex items-center justify-center group-hover:from-[#667eea] group-hover:to-[#764ba2] transition-all duration-300">
@@ -282,6 +300,19 @@ function ServicesSection() {
             </div>
           ))}
         </div>
+        {services.length > 8 && (
+          <div className="text-center mt-8">
+            <Button
+              variant="outline"
+              onClick={() => setShowAll(!showAll)}
+              className="rounded-full px-8"
+              data-testid="button-show-more-services"
+            >
+              {showAll ? "Show Less" : `Show All ${services.length} Categories`}
+              <ChevronRight className={`w-4 h-4 ml-2 transition-transform ${showAll ? 'rotate-90' : ''}`} />
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -7,7 +7,8 @@ InstaTrainMe is a fitness platform landing page that connects users with certifi
 ## Recent Changes (December 2025)
 
 - **B2B Partner Form**: Updated "Partner With Us" section to target enterprise partnerships (corporate wellness, health insurance, gym chains, hospitality, residential communities, strategic alliances) with company-focused fields
-- **Get Started Dialog**: Added modal with separate app download options for Users and Trainers, each with Google Play and App Store links
+- **Get Started Dialog**: Modal with separate app download options for Users ("Start my Fitness Journey") and Trainers ("Provide Training with InstaTrainMe"), each with Google Play and App Store links
+- **Our Services Section**: Expanded to 16 main training categories (Personal Training, Yoga, Boxing/Kickboxing, HIIT, CrossFit, Bootcamp, Circuit Training, Pilates, Interval Training, Running, Martial Arts, Sports Instruction, Dance, Cycling, Barre, Tai Chi) with "50+ Training Categories Available" badge and show/hide toggle
 - **Support Link**: Added Support Center link (https://support.instatrainme.com/support/home) to footer Resources section
 - **Accessibility**: Added comprehensive aria-labels, keyboard navigation, and form labels for WCAG 2.1 AA compliance
 - **PostgreSQL Database**: Created database for data persistence

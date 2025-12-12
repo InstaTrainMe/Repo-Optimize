@@ -1,14 +1,17 @@
-# InstaTrainMe
+# Instatrainme
 
 ## Overview
 
-InstaTrainMe is a fitness platform landing page that connects users with certified personal trainers and gyms. The application serves as a marketing website with B2B partnership forms (corporate wellness, health insurance, strategic partnerships), gym registration, newsletter subscription, blog section for fitness content, and mobile app promotion. The platform offers apps for both Users and Trainers on Google Play and App Store.
+Instatrainme® is a fitness platform landing page that connects users with certified personal trainers and gyms. The application serves as a marketing website with B2B partnership forms (corporate wellness, health insurance, strategic partnerships), gym registration, newsletter subscription, database-driven blog section with admin interface for daily content management, and mobile app promotion. The platform offers apps for both Users and Trainers on Google Play and App Store.
 
 ## Recent Changes (December 2025)
 
+- **Database-Driven Blog System**: New admin interface at `/admin/blog` for creating, editing, publishing, and deleting blog posts. Blog page fetches published posts from the database with fallback to sample content.
+- **Brand Update**: Changed all "InstaTrainMe" references to "Instatrainme®" (registered trademark)
+- **Removed CrossFit**: Removed CrossFit from services list (now 15 categories)
 - **B2B Partner Form**: Updated "Partner With Us" section to target enterprise partnerships (corporate wellness, health insurance, gym chains, hospitality, residential communities, strategic alliances) with company-focused fields
-- **Get Started Dialog**: Modal with separate app download options for Users ("Start my Fitness Journey") and Trainers ("Provide Training with InstaTrainMe"), each with Google Play and App Store links
-- **Our Services Section**: Expanded to 16 main training categories (Personal Training, Yoga, Boxing/Kickboxing, HIIT, CrossFit, Bootcamp, Circuit Training, Pilates, Interval Training, Running, Martial Arts, Sports Instruction, Dance, Cycling, Barre, Tai Chi) with "50+ Training Categories Available" badge and show/hide toggle
+- **Get Started Dialog**: Modal with separate app download options for Users ("Start my Fitness Journey") and Trainers ("Provide Training with Instatrainme"), each with Google Play and App Store links
+- **Our Services Section**: Expanded to 15 training categories (Personal Training, Yoga, Boxing/Kickboxing, HIIT, Bootcamp, Circuit Training, Pilates, Interval Training, Running, Martial Arts, Sports Instruction, Dance, Cycling, Barre, Tai Chi) with "50+ Training Categories Available" badge and show/hide toggle
 - **Support Link**: Added Support Center link (https://support.instatrainme.com/support/home) to footer Resources section
 - **Accessibility**: Added comprehensive aria-labels, keyboard navigation, and form labels for WCAG 2.1 AA compliance
 - **PostgreSQL Database**: Created database for data persistence
@@ -36,7 +39,7 @@ Preferred communication style: Simple, everyday language.
 ### Data Storage
 - **ORM**: Drizzle ORM configured for PostgreSQL
 - **Schema Location**: `shared/schema.ts` contains all table definitions
-- **Current Tables**: users, partner_submissions (B2B with companyName, contactName, email, organizationType, message), gym_submissions, newsletter_subscriptions
+- **Current Tables**: users, partner_submissions (B2B with companyName, contactName, email, organizationType, message), gym_submissions, newsletter_subscriptions, blog_posts (title, excerpt, content, category, author, readTime, published, createdAt)
 - **Development Storage**: MemStorage class provides in-memory fallback when database unavailable
 
 ### Project Structure
@@ -44,7 +47,7 @@ Preferred communication style: Simple, everyday language.
 client/           # React frontend application
   src/
     components/   # UI components (shadcn/ui library)
-    pages/        # Route components (home, blog, not-found)
+    pages/        # Route components (home, blog, blog-admin, not-found)
     hooks/        # Custom React hooks
     lib/          # Utilities and query client
 server/           # Express backend

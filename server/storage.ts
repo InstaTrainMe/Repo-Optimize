@@ -2,7 +2,8 @@ import {
   type User, type InsertUser,
   type Partner, type InsertPartner,
   type Gym, type InsertGym,
-  type Newsletter, type InsertNewsletter
+  type Newsletter, type InsertNewsletter,
+  type BlogPost, type InsertBlogPost
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -16,6 +17,11 @@ export interface IStorage {
   getGyms(): Promise<Gym[]>;
   createNewsletter(newsletter: InsertNewsletter): Promise<Newsletter>;
   getNewsletterByEmail(email: string): Promise<Newsletter | undefined>;
+  getBlogPosts(publishedOnly?: boolean): Promise<BlogPost[]>;
+  getBlogPost(id: string): Promise<BlogPost | undefined>;
+  createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: string, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
+  deleteBlogPost(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -23,12 +29,14 @@ export class MemStorage implements IStorage {
   private partners: Map<string, Partner>;
   private gyms: Map<string, Gym>;
   private newsletters: Map<string, Newsletter>;
+  private blogPosts: Map<string, BlogPost>;
 
   constructor() {
     this.users = new Map();
     this.partners = new Map();
     this.gyms = new Map();
     this.newsletters = new Map();
+    this.blogPosts = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -85,6 +93,39 @@ export class MemStorage implements IStorage {
     return Array.from(this.newsletters.values()).find(
       (n) => n.email === email,
     );
+  }
+
+  async getBlogPosts(publishedOnly: boolean = false): Promise<BlogPost[]> {
+    const posts = Array.from(this.blogPosts.values());
+    const filtered = publishedOnly ? posts.filter(p => p.published) : posts;
+    return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  async getBlogPost(id: string): Promise<BlogPost | undefined> {
+    return this.blogPosts.get(id);
+  }
+
+  async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
+    const id = randomUUID();
+    const post: BlogPost = { 
+      ...insertPost, 
+      id,
+      createdAt: new Date(),
+    };
+    this.blogPosts.set(id, post);
+    return post;
+  }
+
+  async updateBlogPost(id: string, updates: Partial<InsertBlogPost>): Promise<BlogPost | undefined> {
+    const existing = this.blogPosts.get(id);
+    if (!existing) return undefined;
+    const updated: BlogPost = { ...existing, ...updates };
+    this.blogPosts.set(id, updated);
+    return updated;
+  }
+
+  async deleteBlogPost(id: string): Promise<boolean> {
+    return this.blogPosts.delete(id);
   }
 }
 

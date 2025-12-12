@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertPartnerSchema, insertGymSchema, insertNewsletterSchema } from "@shared/schema";
+import { insertPartnerSchema, insertGymSchema, insertNewsletterSchema, insertBlogPostSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(
@@ -73,6 +73,74 @@ export async function registerRoutes(
       } else {
         res.status(500).json({ error: "Internal server error" });
       }
+    }
+  });
+
+  app.get("/api/blog", async (req, res) => {
+    try {
+      const publishedOnly = req.query.published === "true";
+      const posts = await storage.getBlogPosts(publishedOnly);
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/api/blog/:id", async (req, res) => {
+    try {
+      const post = await storage.getBlogPost(req.params.id);
+      if (!post) {
+        res.status(404).json({ error: "Blog post not found" });
+        return;
+      }
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.post("/api/blog", async (req, res) => {
+    try {
+      const validatedData = insertBlogPostSchema.parse(req.body);
+      const post = await storage.createBlogPost(validatedData);
+      res.status(201).json(post);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: "Invalid data", details: error.errors });
+      } else {
+        res.status(500).json({ error: "Internal server error" });
+      }
+    }
+  });
+
+  app.patch("/api/blog/:id", async (req, res) => {
+    try {
+      const updates = insertBlogPostSchema.partial().parse(req.body);
+      const post = await storage.updateBlogPost(req.params.id, updates);
+      if (!post) {
+        res.status(404).json({ error: "Blog post not found" });
+        return;
+      }
+      res.json(post);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: "Invalid data", details: error.errors });
+      } else {
+        res.status(500).json({ error: "Internal server error" });
+      }
+    }
+  });
+
+  app.delete("/api/blog/:id", async (req, res) => {
+    try {
+      const deleted = await storage.deleteBlogPost(req.params.id);
+      if (!deleted) {
+        res.status(404).json({ error: "Blog post not found" });
+        return;
+      }
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
     }
   });
 

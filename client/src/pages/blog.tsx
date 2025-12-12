@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Clock, User, Moon, Sun } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, User, Moon, Sun, Settings } from "lucide-react";
 import { Link } from "wouter";
 import { useTheme } from "@/components/theme-provider";
+import type { BlogPost } from "@shared/schema";
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -33,9 +35,20 @@ function SEOHead() {
   return null;
 }
 
-const blogPosts = [
+interface DisplayPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  readTime: string;
+  createdAt: Date | string;
+}
+
+const fallbackPosts: DisplayPost[] = [
   {
-    id: 1,
+    id: "1",
     title: "5 Ways to Stay Motivated on Your Fitness Journey",
     excerpt: "Struggling to maintain your routine? Try these proven strategies to keep your momentum going throughout the year.",
     content: `Staying motivated on your fitness journey can be challenging, especially when life gets busy. Here are five proven strategies to help you maintain momentum:
@@ -51,11 +64,11 @@ const blogPosts = [
 5. **Reward Yourself**: Set up a reward system for hitting your goals. Treat yourself to new workout gear or a relaxing massage.`,
     category: "Motivation",
     author: "Sarah Johnson",
-    date: "December 10, 2025",
+    createdAt: "2025-12-10",
     readTime: "5 min read"
   },
   {
-    id: 2,
+    id: "2",
     title: "Best Personal Training Apps of 2025",
     excerpt: "We tested the top fitness apps to help you find the perfect match for your goals and lifestyle.",
     content: `The fitness app market has exploded in recent years. Here's our comprehensive review of the best personal training apps in 2025:
@@ -74,11 +87,11 @@ Connect with certified trainers for real-time, personalized coaching. Perfect fo
 Unlike fully automated apps, Instatrainme combines technology with real human expertise, giving you the best of both worlds.`,
     category: "Technology",
     author: "Mike Chen",
-    date: "December 8, 2025",
+    createdAt: "2025-12-08",
     readTime: "7 min read"
   },
   {
-    id: 3,
+    id: "3",
     title: "The Science Behind HIIT Training",
     excerpt: "Discover why high-intensity interval training is so effective for fat loss, endurance, and overall fitness.",
     content: `High-Intensity Interval Training (HIIT) has become one of the most popular workout methods. Here's the science behind why it works:
@@ -100,11 +113,11 @@ After a HIIT workout, your body continues burning calories at an elevated rate f
 Start with 1-2 HIIT sessions per week and gradually increase. Consider working with a certified trainer through Instatrainme to ensure proper form and intensity.`,
     category: "Training",
     author: "Dr. Emily Roberts",
-    date: "December 5, 2025",
+    createdAt: "2025-12-05",
     readTime: "6 min read"
   },
   {
-    id: 4,
+    id: "4",
     title: "Nutrition Tips for Optimal Performance",
     excerpt: "Fuel your workouts properly with these essential nutrition guidelines from certified nutritionists.",
     content: `Proper nutrition is just as important as your workout routine. Here are key tips to optimize your performance:
@@ -130,13 +143,34 @@ Start with 1-2 HIIT sessions per week and gradually increase. Consider working w
 Connect with a certified nutritionist through Instatrainme for personalized meal planning!`,
     category: "Nutrition",
     author: "Lisa Martinez",
-    date: "December 1, 2025",
+    createdAt: "2025-12-01",
     readTime: "8 min read"
   }
 ];
 
+function formatDate(date: Date | string): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+}
+
 export default function Blog() {
-  const [selectedPost, setSelectedPost] = useState<typeof blogPosts[0] | null>(null);
+  const { data: dbPosts = [], isLoading } = useQuery<BlogPost[]>({
+    queryKey: ["/api/blog", "published"],
+    queryFn: async () => {
+      const res = await fetch("/api/blog?published=true");
+      if (!res.ok) throw new Error("Failed to fetch blog posts");
+      return res.json();
+    }
+  });
+
+  const blogPosts: DisplayPost[] = dbPosts.length > 0 
+    ? dbPosts.map(p => ({ ...p, createdAt: p.createdAt }))
+    : fallbackPosts;
+
+  const [selectedPost, setSelectedPost] = useState<DisplayPost | null>(null);
 
   if (selectedPost) {
     return (
@@ -171,7 +205,7 @@ export default function Blog() {
               </span>
               <span className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                {selectedPost.date}
+                {formatDate(selectedPost.createdAt)}
               </span>
               <span className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
@@ -205,7 +239,14 @@ export default function Blog() {
           <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2]">
             Instatrainme Blog
           </h1>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <Link href="/admin/blog">
+              <Button variant="ghost" size="icon" aria-label="Manage blog posts" data-testid="button-admin">
+                <Settings className="w-4 h-4" />
+              </Button>
+            </Link>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
       <main className="max-w-6xl mx-auto px-5 py-12">
@@ -243,7 +284,7 @@ export default function Blog() {
                     <User className="w-4 h-4" />
                     {post.author}
                   </span>
-                  <span className="text-muted-foreground">{post.date}</span>
+                  <span className="text-muted-foreground">{formatDate(post.createdAt)}</span>
                 </div>
               </CardContent>
             </Card>

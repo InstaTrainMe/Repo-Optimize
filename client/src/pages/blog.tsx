@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, User, Moon, Sun, Settings } from "lucide-react";
+import { ShareButtons } from "@/components/share-buttons";
 import { useLocation } from "wouter";
 import { useTheme } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
@@ -25,14 +26,86 @@ function ThemeToggle() {
   );
 }
 
-function SEOHead() {
+const defaultMeta = {
+  title: "Blog - Fitness Tips & News | InstaTrainMe",
+  description: "Stay updated with the latest fitness trends, workout tips, nutrition advice, and expert guidance from InstaTrainMe certified trainers.",
+  ogTitle: "InstaTrainMe® - Find Certified Personal Trainers Near You",
+  ogDescription: "Connect with certified trainers instantly. Book on-demand or scheduled sessions. Train anywhere - virtual or in-person. 500+ certified trainers, 50K+ sessions completed.",
+  ogType: "website",
+  ogUrl: "https://instatrainme.com",
+  ogImage: "https://instatrainme.com/og-image.png",
+  twitterTitle: "InstaTrainMe® - Find Certified Personal Trainers",
+  twitterDescription: "Connect with certified trainers instantly. Book on-demand sessions. Train anywhere!",
+  twitterCard: "summary_large_image",
+  twitterImage: "https://instatrainme.com/og-image.png"
+};
+
+function SEOHead({ post }: { post?: DisplayPost }) {
   useEffect(() => {
-    document.title = "Blog - Fitness Tips & News | Instatrainme";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Stay updated with the latest fitness trends, workout tips, nutrition advice, and expert guidance from Instatrainme certified trainers.");
+    const setMeta = (selector: string, attr: string, content: string) => {
+      const meta = document.querySelector(selector);
+      if (meta) meta.setAttribute(attr, content);
+    };
+
+    if (post) {
+      const postUrl = `https://instatrainme.com/blog/${post.id}`;
+      const postImage = "https://instatrainme.com/og-blog.png";
+      
+      document.title = `${post.title} | InstaTrainMe Blog`;
+      setMeta('meta[name="description"]', "content", post.excerpt);
+      setMeta('meta[property="og:title"]', "content", post.title);
+      setMeta('meta[property="og:description"]', "content", post.excerpt);
+      setMeta('meta[property="og:type"]', "content", "article");
+      setMeta('meta[property="og:url"]', "content", postUrl);
+      setMeta('meta[property="og:image"]', "content", postImage);
+      setMeta('meta[name="twitter:title"]', "content", post.title);
+      setMeta('meta[name="twitter:description"]', "content", post.excerpt);
+      setMeta('meta[name="twitter:card"]', "content", "summary_large_image");
+      setMeta('meta[name="twitter:image"]', "content", postImage);
+
+      const existingSchema = document.querySelector('script[data-schema="blog"]');
+      if (existingSchema) existingSchema.remove();
+
+      const blogSchema = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": post.excerpt,
+        "url": postUrl,
+        "author": { "@type": "Person", "name": post.author },
+        "datePublished": new Date(post.createdAt).toISOString(),
+        "publisher": { "@type": "Organization", "name": "InstaTrainMe", "url": "https://instatrainme.com" },
+        "articleSection": post.category
+      };
+
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-schema", "blog");
+      script.textContent = JSON.stringify(blogSchema);
+      document.head.appendChild(script);
+    } else {
+      document.title = defaultMeta.title;
+      setMeta('meta[name="description"]', "content", defaultMeta.description);
+      setMeta('meta[property="og:title"]', "content", defaultMeta.ogTitle);
+      setMeta('meta[property="og:description"]', "content", defaultMeta.ogDescription);
+      setMeta('meta[property="og:type"]', "content", defaultMeta.ogType);
+      setMeta('meta[property="og:url"]', "content", defaultMeta.ogUrl);
+      setMeta('meta[property="og:image"]', "content", defaultMeta.ogImage);
+      setMeta('meta[name="twitter:title"]', "content", defaultMeta.twitterTitle);
+      setMeta('meta[name="twitter:description"]', "content", defaultMeta.twitterDescription);
+      setMeta('meta[name="twitter:card"]', "content", defaultMeta.twitterCard);
+      setMeta('meta[name="twitter:image"]', "content", defaultMeta.twitterImage);
+
+      const schemaScript = document.querySelector('script[data-schema="blog"]');
+      if (schemaScript) schemaScript.remove();
     }
-  }, []);
+
+    return () => {
+      const schemaScript = document.querySelector('script[data-schema="blog"]');
+      if (schemaScript) schemaScript.remove();
+    };
+  }, [post]);
+
   return null;
 }
 
@@ -177,7 +250,7 @@ export default function Blog() {
   if (selectedPost) {
     return (
       <div className="min-h-screen bg-background">
-        <SEOHead />
+        <SEOHead post={selectedPost} />
         <Navigation />
         <div className="max-w-4xl mx-auto px-5 py-4">
           <Button 
@@ -218,6 +291,9 @@ export default function Blog() {
                   {paragraph}
                 </p>
               ))}
+            </div>
+            <div className="mt-12 pt-8 border-t border-border">
+              <ShareButtons title={selectedPost.title} />
             </div>
           </article>
         </main>

@@ -1,4 +1,5 @@
 import { useLocation } from "wouter";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -9,13 +10,43 @@ import {
 import { Navigation } from "@/components/navigation";
 import { Mail } from "lucide-react";
 
-function SEOHead() {
-  return (
-    <>
-      <title>FAQ - InstaTrainMe® | Frequently Asked Questions</title>
-      <meta name="description" content="Find answers to common questions about InstaTrainMe® - booking trainers, payments, certifications, cancellation policy, and more." />
-    </>
-  );
+function SEOHead({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
+  useEffect(() => {
+    document.title = "FAQ - InstaTrainMe® | Frequently Asked Questions";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Find answers to common questions about InstaTrainMe® - booking trainers, payments, certifications, cancellation policy, and more.");
+    }
+
+    const existingSchema = document.querySelector('script[data-schema="faq"]');
+    if (existingSchema) existingSchema.remove();
+
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    };
+
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.setAttribute("data-schema", "faq");
+    script.textContent = JSON.stringify(faqSchema);
+    document.head.appendChild(script);
+
+    return () => {
+      const schemaScript = document.querySelector('script[data-schema="faq"]');
+      if (schemaScript) schemaScript.remove();
+    };
+  }, [faqs]);
+
+  return null;
 }
 
 const faqs = [
@@ -81,7 +112,7 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead />
+      <SEOHead faqs={faqs} />
       <Navigation />
       
       {/* Hero Section */}

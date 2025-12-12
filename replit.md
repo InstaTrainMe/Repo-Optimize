@@ -6,11 +6,15 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 
 ## Recent Changes (December 2025)
 
-- **Database-Driven Blog System**: New admin interface at `/admin/blog` for creating, editing, publishing, and deleting blog posts. Blog page fetches published posts from the database with fallback to sample content.
-- **Brand Update**: Changed all "InstaTrainMe" references to "Instatrainme®" (registered trademark)
+- **Admin Authentication**: Implemented Replit Auth-based admin authentication for blog management. Users must log in and have admin privileges to access `/admin/blog`. Admin users can manage other user's admin status.
+- **Database-Driven Blog System**: Admin interface at `/admin/blog` for creating, editing, publishing, and deleting blog posts. Protected by authentication. Blog page fetches published posts from the database with fallback to sample content.
+- **Freshworks Chatbot**: Integrated Freshworks chat widget for customer support.
+- **HIPAA Compliant Badge**: Added HIPAA compliant badge to footer.
+- **Footer Address Updated**: 901 N Market St, Suite 100, Wilmington, DE 19801.
+- **Brand Update**: Changed all "InstaTrainMe" references to "InstaTrainMe®" (registered trademark)
 - **Removed CrossFit**: Removed CrossFit from services list (now 15 categories)
 - **B2B Partner Form**: Updated "Partner With Us" section to target enterprise partnerships (corporate wellness, health insurance, gym chains, hospitality, residential communities, strategic alliances) with company-focused fields
-- **Get Started Dialog**: Modal with separate app download options for Users ("Start my Fitness Journey") and Trainers ("Provide Training with Instatrainme"), each with Google Play and App Store links
+- **Get Started Dialog**: Modal with separate app download options for Users ("Start my Fitness Journey") and Trainers ("Provide Training with InstaTrainMe"), each with Google Play and App Store links
 - **Our Services Section**: Expanded to 15 training categories (Personal Training, Yoga, Boxing/Kickboxing, HIIT, Bootcamp, Circuit Training, Pilates, Interval Training, Running, Martial Arts, Sports Instruction, Dance, Cycling, Barre, Tai Chi) with "50+ Training Categories Available" badge and show/hide toggle
 - **Support Link**: Added Support Center link (https://support.instatrainme.com/support/home) to footer Resources section
 - **Accessibility**: Added comprehensive aria-labels, keyboard navigation, and form labels for WCAG 2.1 AA compliance

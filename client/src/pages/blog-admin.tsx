@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,12 +7,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Plus, Pencil, Trash2, Eye, EyeOff, Moon, Sun } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Trash2, Eye, EyeOff, Moon, Sun, LogOut, Users, Shield } from "lucide-react";
 import { Link } from "wouter";
 import { useTheme } from "@/components/theme-provider";
 import { useToast } from "@/hooks/use-toast";
 import { queryClient, apiRequest } from "@/lib/queryClient";
-import type { BlogPost } from "@shared/schema";
+import { useAuth } from "@/hooks/useAuth";
+import { isUnauthorizedError } from "@/lib/authUtils";
+import type { BlogPost, User } from "@shared/schema";
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -63,12 +65,26 @@ const emptyForm: BlogFormData = {
 
 export default function BlogAdmin() {
   const { toast } = useToast();
+  const { user, isLoading: authLoading, isAuthenticated, isAdmin } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<BlogFormData>(emptyForm);
+  const [showUserManagement, setShowUserManagement] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      window.location.href = "/api/login";
+    }
+  }, [authLoading, isAuthenticated]);
 
   const { data: posts = [], isLoading } = useQuery<BlogPost[]>({
-    queryKey: ["/api/blog"]
+    queryKey: ["/api/blog"],
+    enabled: isAuthenticated && isAdmin,
+  });
+
+  const { data: allUsers = [] } = useQuery<User[]>({
+    queryKey: ["/api/admin/users"],
+    enabled: isAuthenticated && isAdmin && showUserManagement,
   });
 
   const createMutation = useMutation({
@@ -114,10 +130,62 @@ export default function BlogAdmin() {
       queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
       toast({ title: "Success", description: "Publish status updated" });
     },
-    onError: () => {
+    onError: (error) => {
+      if (isUnauthorizedError(error as Error)) {
+        toast({ title: "Unauthorized", description: "Please log in again.", variant: "destructive" });
+        setTimeout(() => { window.location.href = "/api/login"; }, 500);
+        return;
+      }
       toast({ title: "Error", description: "Failed to update publish status", variant: "destructive" });
     }
   });
+
+  const updateAdminMutation = useMutation({
+    mutationFn: ({ id, isAdmin }: { id: string; isAdmin: boolean }) =>
+      apiRequest("PATCH", `/api/admin/users/${id}`, { isAdmin }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
+      toast({ title: "Success", description: "User admin status updated" });
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to update user", variant: "destructive" });
+    }
+  });
+
+  if (authLoading || !isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Card className="max-w-md">
+          <CardContent className="pt-6 text-center">
+            <Shield className="w-12 h-12 mx-auto mb-4 text-destructive" />
+            <h2 className="text-xl font-bold mb-2">Access Denied</h2>
+            <p className="text-muted-foreground mb-4">
+              You need admin privileges to access this page. Please contact an administrator.
+            </p>
+            <div className="flex gap-2 justify-center">
+              <Link href="/">
+                <Button variant="outline">Go Home</Button>
+              </Link>
+              <a href="/api/logout">
+                <Button variant="ghost">Logout</Button>
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const resetForm = () => {
     setFormData(emptyForm);
@@ -169,11 +237,74 @@ export default function BlogAdmin() {
           <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2]">
             Blog Admin
           </h1>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowUserManagement(!showUserManagement)}
+              aria-label="Manage users"
+              data-testid="button-users"
+            >
+              <Users className="w-4 h-4" />
+            </Button>
+            <ThemeToggle />
+            <a href="/api/logout">
+              <Button variant="ghost" size="icon" aria-label="Logout" data-testid="button-logout">
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </a>
+          </div>
         </div>
       </header>
 
       <main className="max-w-6xl mx-auto px-5 py-8">
+        {showUserManagement && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="w-5 h-5" />
+                User Management
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                Manage admin access for users. Users must first log in to appear in this list.
+              </p>
+              {allUsers.length === 0 ? (
+                <p className="text-muted-foreground text-center py-4">No users found. Users will appear after they log in.</p>
+              ) : (
+                <div className="space-y-2">
+                  {allUsers.map((u) => (
+                    <div key={u.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        {u.profileImageUrl && (
+                          <img src={u.profileImageUrl} alt="" className="w-8 h-8 rounded-full object-cover" />
+                        )}
+                        <div>
+                          <p className="font-medium">{u.firstName} {u.lastName}</p>
+                          <p className="text-sm text-muted-foreground">{u.email}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground mr-2">
+                          {u.isAdmin ? "Admin" : "User"}
+                        </span>
+                        <Switch
+                          checked={u.isAdmin ?? false}
+                          onCheckedChange={(checked) => updateAdminMutation.mutate({ id: u.id, isAdmin: checked })}
+                          disabled={u.id === user?.id}
+                          aria-label={`Toggle admin for ${u.email}`}
+                          data-testid={`switch-admin-${u.id}`}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1">
             <Card>

@@ -1,16 +1,20 @@
 import { 
-  type User, type InsertUser,
+  type User, type UpsertUser,
   type Partner, type InsertPartner,
   type Gym, type InsertGym,
   type Newsletter, type InsertNewsletter,
-  type BlogPost, type InsertBlogPost
+  type BlogPost, type InsertBlogPost,
+  users, partnerSubmissions, gymSubmissions, newsletterSubscriptions, blogPosts
 } from "@shared/schema";
 import { randomUUID } from "crypto";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  upsertUser(user: UpsertUser): Promise<User>;
+  getAllUsers(): Promise<User[]>;
+  updateUserAdmin(id: string, isAdmin: boolean): Promise<User | undefined>;
   createPartner(partner: InsertPartner): Promise<Partner>;
   getPartners(): Promise<Partner[]>;
   createGym(gym: InsertGym): Promise<Gym>;
@@ -24,109 +28,96 @@ export interface IStorage {
   deleteBlogPost(id: string): Promise<boolean>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private partners: Map<string, Partner>;
-  private gyms: Map<string, Gym>;
-  private newsletters: Map<string, Newsletter>;
-  private blogPosts: Map<string, BlogPost>;
-
-  constructor() {
-    this.users = new Map();
-    this.partners = new Map();
-    this.gyms = new Map();
-    this.newsletters = new Map();
-    this.blogPosts = new Map();
-  }
-
+export class DatabaseStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          email: userData.email,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          profileImageUrl: userData.profileImageUrl,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return user;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+  async getAllUsers(): Promise<User[]> {
+    return db.select().from(users);
+  }
+
+  async updateUserAdmin(id: string, isAdmin: boolean): Promise<User | undefined> {
+    const [user] = await db
+      .update(users)
+      .set({ isAdmin, updatedAt: new Date() })
+      .where(eq(users.id, id))
+      .returning();
     return user;
   }
 
   async createPartner(insertPartner: InsertPartner): Promise<Partner> {
-    const id = randomUUID();
-    const partner: Partner = { 
-      ...insertPartner, 
-      id,
-      message: insertPartner.message ?? null 
-    };
-    this.partners.set(id, partner);
+    const [partner] = await db.insert(partnerSubmissions).values(insertPartner).returning();
     return partner;
   }
 
   async getPartners(): Promise<Partner[]> {
-    return Array.from(this.partners.values());
+    return db.select().from(partnerSubmissions);
   }
 
   async createGym(insertGym: InsertGym): Promise<Gym> {
-    const id = randomUUID();
-    const gym: Gym = { ...insertGym, id };
-    this.gyms.set(id, gym);
+    const [gym] = await db.insert(gymSubmissions).values(insertGym).returning();
     return gym;
   }
 
   async getGyms(): Promise<Gym[]> {
-    return Array.from(this.gyms.values());
+    return db.select().from(gymSubmissions);
   }
 
   async createNewsletter(insertNewsletter: InsertNewsletter): Promise<Newsletter> {
-    const id = randomUUID();
-    const newsletter: Newsletter = { ...insertNewsletter, id };
-    this.newsletters.set(id, newsletter);
+    const [newsletter] = await db.insert(newsletterSubscriptions).values(insertNewsletter).returning();
     return newsletter;
   }
 
   async getNewsletterByEmail(email: string): Promise<Newsletter | undefined> {
-    return Array.from(this.newsletters.values()).find(
-      (n) => n.email === email,
-    );
+    const [newsletter] = await db.select().from(newsletterSubscriptions).where(eq(newsletterSubscriptions.email, email));
+    return newsletter;
   }
 
   async getBlogPosts(publishedOnly: boolean = false): Promise<BlogPost[]> {
-    const posts = Array.from(this.blogPosts.values());
-    const filtered = publishedOnly ? posts.filter(p => p.published) : posts;
-    return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const posts = await db.select().from(blogPosts);
+    const filtered = publishedOnly ? posts.filter((p: BlogPost) => p.published) : posts;
+    return filtered.sort((a: BlogPost, b: BlogPost) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   async getBlogPost(id: string): Promise<BlogPost | undefined> {
-    return this.blogPosts.get(id);
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    return post;
   }
 
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
-    const id = randomUUID();
-    const post: BlogPost = { 
-      ...insertPost, 
-      id,
-      createdAt: new Date(),
-    };
-    this.blogPosts.set(id, post);
+    const [post] = await db.insert(blogPosts).values(insertPost).returning();
     return post;
   }
 
   async updateBlogPost(id: string, updates: Partial<InsertBlogPost>): Promise<BlogPost | undefined> {
-    const existing = this.blogPosts.get(id);
-    if (!existing) return undefined;
-    const updated: BlogPost = { ...existing, ...updates };
-    this.blogPosts.set(id, updated);
-    return updated;
+    const [post] = await db.update(blogPosts).set(updates).where(eq(blogPosts.id, id)).returning();
+    return post;
   }
 
   async deleteBlogPost(id: string): Promise<boolean> {
-    return this.blogPosts.delete(id);
+    const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
+    return true;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();

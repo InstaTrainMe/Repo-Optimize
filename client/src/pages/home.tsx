@@ -865,7 +865,7 @@ function Footer() {
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
-                <span>74 E Glenwood Ave Suite 252, Smyrna, DE 19977</span>
+                <span>901 N Market St<br />Suite 100<br />Wilmington, DE 19801</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
@@ -876,8 +876,14 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} Instatrainme® Technologies Inc. All rights reserved.</p>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10 pt-8">
+          <p className="text-gray-500 text-sm">&copy; {new Date().getFullYear()} InstaTrainMe® Technologies Inc. All rights reserved.</p>
+          <img 
+            src="/hipaa-compliant.png" 
+            alt="HIPAA Compliant" 
+            className="h-10 object-contain"
+            data-testid="img-hipaa-badge"
+          />
         </div>
       </div>
     </footer>

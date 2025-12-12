@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>InstaTrainMe - Find Personal Trainers Near You</title>
+    <title>InstaTrainMe® - Find Personal Trainers Near You</title>
     <meta name="description" content="Connect with certified trainers. Book sessions, track progress. Download now!" />
     <meta name="keywords" content="personal trainer, gym, fitness, workout, training, yoga, boxing, HIIT" />
-    <meta property="og:title" content="InstaTrainMe - Find Personal Trainers Near You" />
+    <meta property="og:title" content="InstaTrainMe® - Find Personal Trainers Near You" />
     <meta property="og:description" content="Connect with certified trainers. Book sessions, track progress." />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -17,5 +17,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      function initFreshChat() {
+        window.fcWidget.init({
+          token: "4d391ca9-1d67-40a9-8c43-8e2d3ac360c6",
+          host: "https://instatrainmetechnologies.freshchat.com"
+        });
+      }
+      function initialize(i,t){var e;i.getElementById(t)?initFreshChat():((e=i.createElement("script")).id=t,e.async=!0,e.src="https://instatrainmetechnologies.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))}
+      function initiateCall(){initialize(document,"Freshdesk Messaging-js-sdk")}
+      window.addEventListener?window.addEventListener("load",initiateCall,!1):window.attachEvent("load",initiateCall,!1);
+    </script>
   </body>
 </html>

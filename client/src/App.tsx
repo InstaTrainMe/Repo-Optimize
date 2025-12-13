@@ -11,6 +11,8 @@ import FAQ from "@/pages/faq";
 import Blog from "@/pages/blog";
 import BlogAdmin from "@/pages/blog-admin";
 import Partners from "@/pages/partners";
+import PrivacyPolicy from "@/pages/privacy-policy";
+import Terms from "@/pages/terms";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -23,6 +25,8 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/admin/blog" component={BlogAdmin} />
       <Route path="/partners" component={Partners} />
+      <Route path="/privacy" component={PrivacyPolicy} />
+      <Route path="/terms" component={Terms} />
       <Route component={NotFound} />
     </Switch>
   );

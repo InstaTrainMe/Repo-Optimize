@@ -878,9 +878,9 @@ function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Sitemap</h4>
             <ul className="space-y-3 text-gray-400">
-              <li><a href="https://instatrainme.com/aboutus" className="hover:text-[#667eea] transition-colors">About Us</a></li>
-              <li><a href="https://instatrainme.com/privacypolicy" className="hover:text-[#667eea] transition-colors">Privacy Policy</a></li>
-              <li><a href="https://instatrainme.com/termsandconditions" className="hover:text-[#667eea] transition-colors">Terms & Conditions</a></li>
+              <li><Link href="/about" className="hover:text-[#667eea] transition-colors">About Us</Link></li>
+              <li><Link href="/privacy" className="hover:text-[#667eea] transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-[#667eea] transition-colors">Terms & Conditions</Link></li>
             </ul>
           </div>
           <div>

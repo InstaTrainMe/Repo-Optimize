@@ -27,6 +27,7 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 - **Privacy Policy Page**: New /privacy page with comprehensive privacy policy including data collection, usage, security, and HIPAA compliance information. InstaTrainMe® branding throughout.
 - **Terms & Conditions Page**: New /terms page with comprehensive terms of service covering user agreements, liability, intellectual property, and dispute resolution. InstaTrainMe® branding throughout.
 - **Footer Links Updated**: Sitemap section now uses internal routes (/about, /privacy, /terms) instead of external URLs
+- **Dynamic Sitemap**: Dynamic /sitemap.xml endpoint that auto-generates XML with all static pages and published blog posts. Includes proper lastmod, changefreq, and priority values for SEO
 
 ## User Preferences
 

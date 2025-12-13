@@ -10,6 +10,7 @@ import Benefits from "@/pages/benefits";
 import FAQ from "@/pages/faq";
 import Blog from "@/pages/blog";
 import BlogAdmin from "@/pages/blog-admin";
+import Login from "@/pages/login";
 import Partners from "@/pages/partners";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import Terms from "@/pages/terms";
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/faq" component={FAQ} />
       <Route path="/blog" component={Blog} />
       <Route path="/admin/blog" component={BlogAdmin} />
+      <Route path="/login" component={Login} />
       <Route path="/partners" component={Partners} />
       <Route path="/privacy" component={PrivacyPolicy} />
       <Route path="/terms" component={Terms} />

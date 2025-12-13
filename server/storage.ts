@@ -12,8 +12,11 @@ import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
   createUser(user: { email: string; firstName?: string; lastName?: string; isAdmin?: boolean }): Promise<User>;
+  createUserWithPassword(user: { email: string; passwordHash: string; firstName?: string; lastName?: string; isAdmin?: boolean }): Promise<User>;
+  updateUserPassword(id: string, passwordHash: string): Promise<User | undefined>;
   getAllUsers(): Promise<User[]>;
   updateUserAdmin(id: string, isAdmin: boolean): Promise<User | undefined>;
   createPartner(partner: InsertPartner): Promise<Partner>;
@@ -32,6 +35,11 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
     return user;
   }
 
@@ -63,6 +71,30 @@ export class DatabaseStorage implements IStorage {
         lastName: userData.lastName || null,
         isAdmin: userData.isAdmin || false,
       })
+      .returning();
+    return user;
+  }
+
+  async createUserWithPassword(userData: { email: string; passwordHash: string; firstName?: string; lastName?: string; isAdmin?: boolean }): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values({
+        id: randomUUID(),
+        email: userData.email,
+        passwordHash: userData.passwordHash,
+        firstName: userData.firstName || null,
+        lastName: userData.lastName || null,
+        isAdmin: userData.isAdmin || false,
+      })
+      .returning();
+    return user;
+  }
+
+  async updateUserPassword(id: string, passwordHash: string): Promise<User | undefined> {
+    const [user] = await db
+      .update(users)
+      .set({ passwordHash, updatedAt: new Date() })
+      .where(eq(users.id, id))
       .returning();
     return user;
   }

@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertPartnerSchema, insertGymSchema, insertNewsletterSchema, insertBlogPostSchema } from "@shared/schema";
 import { z } from "zod";
-import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
+import { setupAuth, isAuthenticated, isAdmin, seedAdminUser } from "./auth";
 import { sendPartnerNotification, sendGymNotification, sendNewsletterNotification } from "./email";
 
 export async function registerRoutes(
@@ -12,6 +12,7 @@ export async function registerRoutes(
 ): Promise<Server> {
   
   await setupAuth(app);
+  await seedAdminUser();
 
   // Dynamic sitemap.xml generation
   app.get("/sitemap.xml", async (req, res) => {
@@ -69,17 +70,6 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Error generating sitemap:", error);
       res.status(500).send("Error generating sitemap");
-    }
-  });
-
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
     }
   });
 

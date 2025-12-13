@@ -1,6 +1,13 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Menu, Sun, Moon } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "@/components/theme-provider";
@@ -60,12 +67,77 @@ export function Navigation() {
           </Button>
 
           <div className="hidden md:block">
-            <Button
-              className="bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold"
-              data-testid="button-nav-get-started"
-            >
-              Get Started
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  className="bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold"
+                  data-testid="button-nav-get-started"
+                >
+                  Get Started
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-2xl z-[100]">
+                <DialogHeader>
+                  <DialogTitle className="text-center text-2xl font-bold">Choose Your Path</DialogTitle>
+                </DialogHeader>
+                <div className="grid md:grid-cols-2 gap-6 mt-4">
+                  <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-[#1a1f2e] to-[#2a2f3e] p-6 text-white">
+                    <div className="relative z-10">
+                      <h3 className="text-lg font-semibold mb-2">For Users</h3>
+                      <p className="text-xl font-bold mb-4">Start my Fitness Journey</p>
+                      <p className="text-sm text-white/70 mb-6">Are You a User?</p>
+                      <div className="flex flex-col gap-3">
+                        <a 
+                          href="https://play.google.com/store/apps/details?id=com.instatrainme.app" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="block transition-transform hover:scale-105"
+                          data-testid="nav-link-user-google-play"
+                        >
+                          <img src="https://instatrainme.com/googleplaydark.webp" alt="Get it on Google Play" className="h-10" />
+                        </a>
+                        <a 
+                          href="https://apps.apple.com/us/app/instatrainme/id1554932398" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="block transition-transform hover:scale-105"
+                          data-testid="nav-link-user-app-store"
+                        >
+                          <img src="https://instatrainme.com/appstoreblack.webp" alt="Download on the App Store" className="h-10" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-[#3a3020] to-[#4a4030] p-6 text-white">
+                    <div className="relative z-10">
+                      <h3 className="text-lg font-semibold mb-2">For Trainers</h3>
+                      <p className="text-xl font-bold mb-4">Provide Training with InstaTrainMe<sup className="text-xs">®</sup></p>
+                      <p className="text-sm text-white/70 mb-6">Are You a Trainer?</p>
+                      <div className="flex flex-col gap-3">
+                        <a 
+                          href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="block transition-transform hover:scale-105"
+                          data-testid="nav-link-trainer-google-play"
+                        >
+                          <img src="https://instatrainme.com/googleplaydark.webp" alt="Get it on Google Play" className="h-10" />
+                        </a>
+                        <a 
+                          href="https://apps.apple.com/us/app/instatrainme-trainer/id1554932565" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="block transition-transform hover:scale-105"
+                          data-testid="nav-link-trainer-app-store"
+                        >
+                          <img src="https://instatrainme.com/appstoreblack.webp" alt="Download on the App Store" className="h-10" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -88,13 +160,73 @@ export function Navigation() {
                   </Button>
                 ))}
                 <div className="pt-4 border-t">
-                  <Button
-                    className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold"
-                    onClick={() => setIsOpen(false)}
-                    data-testid="button-mobile-get-started"
-                  >
-                    Get Started
-                  </Button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-semibold"
+                        data-testid="button-mobile-get-started"
+                      >
+                        Get Started
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-2xl z-[100]">
+                      <DialogHeader>
+                        <DialogTitle className="text-center text-2xl font-bold">Choose Your Path</DialogTitle>
+                      </DialogHeader>
+                      <div className="grid md:grid-cols-2 gap-6 mt-4">
+                        <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-[#1a1f2e] to-[#2a2f3e] p-6 text-white">
+                          <div className="relative z-10">
+                            <h3 className="text-lg font-semibold mb-2">For Users</h3>
+                            <p className="text-xl font-bold mb-4">Start my Fitness Journey</p>
+                            <p className="text-sm text-white/70 mb-6">Are You a User?</p>
+                            <div className="flex flex-col gap-3">
+                              <a 
+                                href="https://play.google.com/store/apps/details?id=com.instatrainme.app" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="block transition-transform hover:scale-105"
+                              >
+                                <img src="https://instatrainme.com/googleplaydark.webp" alt="Get it on Google Play" className="h-10" />
+                              </a>
+                              <a 
+                                href="https://apps.apple.com/us/app/instatrainme/id1554932398" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="block transition-transform hover:scale-105"
+                              >
+                                <img src="https://instatrainme.com/appstoreblack.webp" alt="Download on the App Store" className="h-10" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-[#3a3020] to-[#4a4030] p-6 text-white">
+                          <div className="relative z-10">
+                            <h3 className="text-lg font-semibold mb-2">For Trainers</h3>
+                            <p className="text-xl font-bold mb-4">Provide Training with InstaTrainMe<sup className="text-xs">®</sup></p>
+                            <p className="text-sm text-white/70 mb-6">Are You a Trainer?</p>
+                            <div className="flex flex-col gap-3">
+                              <a 
+                                href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="block transition-transform hover:scale-105"
+                              >
+                                <img src="https://instatrainme.com/googleplaydark.webp" alt="Get it on Google Play" className="h-10" />
+                              </a>
+                              <a 
+                                href="https://apps.apple.com/us/app/instatrainme-trainer/id1554932565" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="block transition-transform hover:scale-105"
+                              >
+                                <img src="https://instatrainme.com/appstoreblack.webp" alt="Download on the App Store" className="h-10" />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </nav>
             </SheetContent>

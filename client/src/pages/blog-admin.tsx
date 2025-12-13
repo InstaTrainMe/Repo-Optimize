@@ -50,6 +50,7 @@ interface BlogFormData {
   category: string;
   author: string;
   readTime: string;
+  imageUrl: string;
   published: boolean;
 }
 
@@ -60,6 +61,7 @@ const emptyForm: BlogFormData = {
   category: "Training",
   author: "",
   readTime: "5 min read",
+  imageUrl: "",
   published: false
 };
 
@@ -201,6 +203,7 @@ export default function BlogAdmin() {
       category: post.category,
       author: post.author,
       readTime: post.readTime,
+      imageUrl: post.imageUrl || "",
       published: post.published
     });
     setIsEditing(true);
@@ -370,6 +373,27 @@ export default function BlogAdmin() {
                   </div>
 
                   <div className="space-y-2">
+                    <Label htmlFor="imageUrl">Image URL (optional)</Label>
+                    <Input
+                      id="imageUrl"
+                      value={formData.imageUrl}
+                      onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                      placeholder="https://example.com/image.jpg"
+                      data-testid="input-image-url"
+                    />
+                    {formData.imageUrl && (
+                      <div className="mt-2 rounded-lg overflow-hidden border border-border">
+                        <img 
+                          src={formData.imageUrl} 
+                          alt="Preview" 
+                          className="w-full h-32 object-cover"
+                          onError={(e) => (e.currentTarget.style.display = 'none')}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
                     <Label htmlFor="excerpt">Excerpt</Label>
                     <Textarea
                       id="excerpt"
@@ -444,8 +468,18 @@ export default function BlogAdmin() {
                         data-testid={`post-item-${post.id}`}
                       >
                         <div className="flex items-start justify-between gap-4">
+                          {post.imageUrl && (
+                            <div className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+                              <img 
+                                src={post.imageUrl} 
+                                alt={post.title} 
+                                className="w-full h-full object-cover"
+                                onError={(e) => (e.currentTarget.parentElement!.style.display = 'none')}
+                              />
+                            </div>
+                          )}
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
+                            <div className="flex items-center gap-2 mb-1 flex-wrap">
                               <span className="text-xs px-2 py-0.5 rounded-full bg-gradient-to-r from-[#667eea]/10 to-[#764ba2]/10 text-[#667eea]">
                                 {post.category}
                               </span>

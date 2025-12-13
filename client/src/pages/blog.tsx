@@ -117,6 +117,7 @@ interface DisplayPost {
   category: string;
   author: string;
   readTime: string;
+  imageUrl?: string | null;
   createdAt: Date | string;
 }
 
@@ -271,6 +272,15 @@ export default function Blog() {
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6" data-testid="text-article-title">
               {selectedPost.title}
             </h1>
+            {selectedPost.imageUrl && (
+              <div className="mb-8 rounded-lg overflow-hidden">
+                <img 
+                  src={selectedPost.imageUrl} 
+                  alt={selectedPost.title} 
+                  className="w-full h-auto max-h-96 object-cover"
+                />
+              </div>
+            )}
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 pb-8 border-b border-border">
               <span className="flex items-center gap-2">
                 <User className="w-4 h-4" />
@@ -333,6 +343,15 @@ export default function Blog() {
               onClick={() => setSelectedPost(post)}
               data-testid={`card-blog-${post.id}`}
             >
+              {post.imageUrl && (
+                <div className="w-full h-48 overflow-hidden">
+                  <img 
+                    src={post.imageUrl} 
+                    alt={post.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-[#667eea]/10 to-[#764ba2]/10 text-[#667eea]">

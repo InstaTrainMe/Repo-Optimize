@@ -108,7 +108,7 @@ function HeroSection() {
                         title="Download InstaTrainMe - Personal Trainer App for Android"
                         data-testid="link-user-google-play"
                       >
-                        <img src="https://instatrainme.com/googleplaydark.webp" alt="Get InstaTrainMe Personal Trainer App on Google Play" className="h-10" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get InstaTrainMe Personal Trainer App on Google Play" className="h-10" />
                       </a>
                       <a 
                         href="https://apps.apple.com/us/app/instatrainme/id6499338812" 
@@ -119,7 +119,7 @@ function HeroSection() {
                         title="Download InstaTrainMe - Personal Trainer App for iOS"
                         data-testid="link-user-app-store"
                       >
-                        <img src="https://instatrainme.com/appstoreblack.webp" alt="Download InstaTrainMe Personal Trainer App on App Store" className="h-10" />
+                        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download InstaTrainMe Personal Trainer App on App Store" className="h-10" />
                       </a>
                     </div>
                   </div>
@@ -140,7 +140,7 @@ function HeroSection() {
                         title="Download InstaTrainMe Trainer - Manage Fitness Clients for Android"
                         data-testid="link-trainer-google-play"
                       >
-                        <img src="https://instatrainme.com/googleplaydark.webp" alt="Get InstaTrainMe Trainer App on Google Play" className="h-10" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get InstaTrainMe Trainer App on Google Play" className="h-10" />
                       </a>
                       <a 
                         href="https://apps.apple.com/us/app/instatrainme-trainer/id6499338940" 
@@ -151,7 +151,7 @@ function HeroSection() {
                         title="Download InstaTrainMe Trainer - Manage Fitness Clients for iOS"
                         data-testid="link-trainer-app-store"
                       >
-                        <img src="https://instatrainme.com/appstoreblack.webp" alt="Download InstaTrainMe Trainer App on App Store" className="h-10" />
+                        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download InstaTrainMe Trainer App on App Store" className="h-10" />
                       </a>
                     </div>
                   </div>

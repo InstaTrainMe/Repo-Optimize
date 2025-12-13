@@ -104,30 +104,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      function initFreshChat() {
-        window.fcWidget.init({
-          token: "4d391ca9-1d67-40a9-8c43-8e2d3ac360c6",
-          host: "https://instatrainmetechnologies.freshchat.com"
-        });
-      }
-      function initialize(i,t){
-        var e;
-        if(i.getElementById(t)) {
-          initFreshChat();
-        } else {
-          e = i.createElement("script");
-          e.id = t;
-          e.async = true;
-          e.src = "https://instatrainmetechnologies.freshchat.com/js/widget.js";
-          e.onload = initFreshChat;
-          i.head.appendChild(e);
-        }
-      }
-      function initiateCall(){
-        initialize(document, "freshchat-js-sdk");
-      }
-      window.addEventListener("load", initiateCall, false);
-    </script>
+    <script src="//fw-cdn.com/11900887/4474404.js" chat="true"></script>
   </body>
 </html>

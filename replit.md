@@ -28,6 +28,9 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 - **Terms & Conditions Page**: New /terms page with comprehensive terms of service covering user agreements, liability, intellectual property, and dispute resolution. InstaTrainMe® branding throughout.
 - **Footer Links Updated**: Sitemap section now uses internal routes (/about, /privacy, /terms) instead of external URLs
 - **Dynamic Sitemap**: Dynamic /sitemap.xml endpoint that auto-generates XML with all static pages and published blog posts. Includes proper lastmod, changefreq, and priority values for SEO
+- **Blog Post Images**: Added imageUrl field to blog posts. Admin can add image URLs when creating/editing posts. Images display on blog cards and article pages.
+- **User Management**: Admin panel now includes ability to create new users with email, first name, last name, and admin status toggle.
+- **Email Notifications**: Mailgun integration sends email notifications to Sales@instatrainme.com when forms are submitted (partnership inquiries, gym registrations, newsletter subscriptions). Requires MAILGUN_API_KEY and MAILGUN_DOMAIN secrets.
 
 ## User Preferences
 
@@ -52,7 +55,7 @@ Preferred communication style: Simple, everyday language.
 ### Data Storage
 - **ORM**: Drizzle ORM configured for PostgreSQL
 - **Schema Location**: `shared/schema.ts` contains all table definitions
-- **Current Tables**: users, partner_submissions (B2B with companyName, contactName, email, organizationType, message), gym_submissions, newsletter_subscriptions, blog_posts (title, excerpt, content, category, author, readTime, published, createdAt)
+- **Current Tables**: users, partner_submissions (B2B with companyName, contactName, email, organizationType, message), gym_submissions, newsletter_subscriptions, blog_posts (title, excerpt, content, category, author, readTime, imageUrl, published, createdAt)
 - **Development Storage**: MemStorage class provides in-memory fallback when database unavailable
 
 ### Project Structure
@@ -94,7 +97,8 @@ shared/           # Shared code between client/server
 - Embla Carousel for carousels
 - React Day Picker for calendar components
 
-### Third-Party Services (potential integrations based on dependencies)
+### Third-Party Services
+- Mailgun (email notifications - ACTIVE, requires MAILGUN_API_KEY and MAILGUN_DOMAIN secrets)
 - Stripe (payment processing - package installed)
 - Nodemailer (email sending - package installed)
 - OpenAI and Google Generative AI (AI features - packages installed)

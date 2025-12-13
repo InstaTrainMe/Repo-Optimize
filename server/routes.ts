@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertPartnerSchema, insertGymSchema, insertNewsletterSchema, insertBlogPostSchema } from "@shared/schema";
 import { z } from "zod";
 import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
+import { sendPartnerNotification, sendGymNotification, sendNewsletterNotification } from "./email";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -127,6 +128,7 @@ export async function registerRoutes(
     try {
       const validatedData = insertPartnerSchema.parse(req.body);
       const partner = await storage.createPartner(validatedData);
+      sendPartnerNotification(validatedData).catch(console.error);
       res.status(201).json(partner);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -150,6 +152,7 @@ export async function registerRoutes(
     try {
       const validatedData = insertGymSchema.parse(req.body);
       const gym = await storage.createGym(validatedData);
+      sendGymNotification(validatedData).catch(console.error);
       res.status(201).json(gym);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -180,6 +183,7 @@ export async function registerRoutes(
       }
       
       const newsletter = await storage.createNewsletter(validatedData);
+      sendNewsletterNotification(validatedData.email).catch(console.error);
       res.status(201).json(newsletter);
     } catch (error) {
       if (error instanceof z.ZodError) {

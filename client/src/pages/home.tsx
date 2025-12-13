@@ -59,7 +59,7 @@ function ThemeToggle() {
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-5 py-20 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-end items-center text-center px-5 pb-24 pt-20 overflow-hidden">
       <video
         autoPlay
         loop
@@ -71,26 +71,9 @@ function HeroSection() {
       >
         <source src="/hero-background.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-br from-[#667eea]/70 via-[#764ba2]/60 to-[#667eea]/70" />
-      <div className="absolute inset-0 bg-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       <ThemeToggle />
       <div className="relative z-10 max-w-4xl mx-auto">
-        <h1 
-          className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight animate-fade-in"
-          data-testid="text-hero-title"
-        >
-          Transform Your
-          <br />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">
-            Fitness Journey
-          </span>
-        </h1>
-        <p 
-          className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed"
-          data-testid="text-hero-subtitle"
-        >
-          Connect with certified trainers and gyms instantly. Book on-demand sessions, track your progress, and achieve your fitness goals.
-        </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Dialog>
             <DialogTrigger asChild>
@@ -179,11 +162,6 @@ function HeroSection() {
             <Briefcase className="w-5 h-5 mr-2" aria-hidden="true" />
             Partner With Us
           </Button>
-        </div>
-      </div>
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-8 h-12 rounded-full border-2 border-white/50 flex items-start justify-center p-2">
-          <div className="w-1.5 h-3 bg-white/80 rounded-full animate-pulse" />
         </div>
       </div>
     </section>

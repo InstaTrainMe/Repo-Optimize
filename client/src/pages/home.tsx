@@ -87,7 +87,7 @@ function HeroSection() {
                 Get Started
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-2xl">
+            <DialogContent className="sm:max-w-2xl z-[100]">
               <DialogHeader>
                 <DialogTitle className="text-center text-2xl font-bold">Choose Your Path</DialogTitle>
               </DialogHeader>
@@ -103,19 +103,19 @@ function HeroSection() {
                         href="https://play.google.com/store/apps/details?id=com.instatrainme.app" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 bg-black/40 hover:bg-black/60 rounded-lg px-4 py-2 transition-colors"
+                        className="block transition-transform hover:scale-105"
                         data-testid="link-user-google-play"
                       >
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-8" />
+                        <img src="https://instatrainme.com/googleplaydark.webp" alt="Get it on Google Play" className="h-10" />
                       </a>
                       <a 
                         href="https://apps.apple.com/us/app/instatrainme/id1554932398" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 bg-black/40 hover:bg-black/60 rounded-lg px-4 py-2 transition-colors"
+                        className="block transition-transform hover:scale-105"
                         data-testid="link-user-app-store"
                       >
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" className="h-8" />
+                        <img src="https://instatrainme.com/appstoreblack.webp" alt="Download on the App Store" className="h-10" />
                       </a>
                     </div>
                   </div>
@@ -131,19 +131,19 @@ function HeroSection() {
                         href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 bg-black/40 hover:bg-black/60 rounded-lg px-4 py-2 transition-colors"
+                        className="block transition-transform hover:scale-105"
                         data-testid="link-trainer-google-play"
                       >
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-8" />
+                        <img src="https://instatrainme.com/googleplaydark.webp" alt="Get it on Google Play" className="h-10" />
                       </a>
                       <a 
                         href="https://apps.apple.com/us/app/instatrainme-trainer/id1554932565" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 bg-black/40 hover:bg-black/60 rounded-lg px-4 py-2 transition-colors"
+                        className="block transition-transform hover:scale-105"
                         data-testid="link-trainer-app-store"
                       >
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" className="h-8" />
+                        <img src="https://instatrainme.com/appstoreblack.webp" alt="Download on the App Store" className="h-10" />
                       </a>
                     </div>
                   </div>

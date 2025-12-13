@@ -13,6 +13,7 @@ import { eq } from "drizzle-orm";
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
+  createUser(user: { email: string; firstName?: string; lastName?: string; isAdmin?: boolean }): Promise<User>;
   getAllUsers(): Promise<User[]>;
   updateUserAdmin(id: string, isAdmin: boolean): Promise<User | undefined>;
   createPartner(partner: InsertPartner): Promise<Partner>;
@@ -47,6 +48,20 @@ export class DatabaseStorage implements IStorage {
           profileImageUrl: userData.profileImageUrl,
           updatedAt: new Date(),
         },
+      })
+      .returning();
+    return user;
+  }
+
+  async createUser(userData: { email: string; firstName?: string; lastName?: string; isAdmin?: boolean }): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values({
+        id: randomUUID(),
+        email: userData.email,
+        firstName: userData.firstName || null,
+        lastName: userData.lastName || null,
+        isAdmin: userData.isAdmin || false,
       })
       .returning();
     return user;

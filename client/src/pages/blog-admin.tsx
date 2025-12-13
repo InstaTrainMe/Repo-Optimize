@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Plus, Pencil, Trash2, Eye, EyeOff, Moon, Sun, LogOut, Users, Shield } from "lucide-react";
+import { ArrowLeft, Plus, Pencil, Trash2, Eye, EyeOff, Moon, Sun, LogOut, Users, Shield, UserPlus } from "lucide-react";
 import { Link } from "wouter";
 import { useTheme } from "@/components/theme-provider";
 import { useToast } from "@/hooks/use-toast";
@@ -72,6 +72,10 @@ export default function BlogAdmin() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<BlogFormData>(emptyForm);
   const [showUserManagement, setShowUserManagement] = useState(false);
+  const [newUserEmail, setNewUserEmail] = useState("");
+  const [newUserFirstName, setNewUserFirstName] = useState("");
+  const [newUserLastName, setNewUserLastName] = useState("");
+  const [newUserIsAdmin, setNewUserIsAdmin] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -151,6 +155,22 @@ export default function BlogAdmin() {
     },
     onError: () => {
       toast({ title: "Error", description: "Failed to update user", variant: "destructive" });
+    }
+  });
+
+  const createUserMutation = useMutation({
+    mutationFn: (data: { email: string; firstName: string; lastName: string; isAdmin: boolean }) =>
+      apiRequest("POST", "/api/admin/users", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/users"] });
+      toast({ title: "Success", description: "User created successfully" });
+      setNewUserEmail("");
+      setNewUserFirstName("");
+      setNewUserLastName("");
+      setNewUserIsAdmin(false);
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to create user. Email may already exist.", variant: "destructive" });
     }
   });
 
@@ -270,11 +290,57 @@ export default function BlogAdmin() {
               </CardTitle>
             </CardHeader>
             <CardContent>
+              <div className="mb-6 p-4 bg-muted/30 rounded-lg">
+                <h4 className="font-medium mb-3 flex items-center gap-2">
+                  <UserPlus className="w-4 h-4" /> Add New User
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                  <Input
+                    placeholder="Email (required)"
+                    value={newUserEmail}
+                    onChange={(e) => setNewUserEmail(e.target.value)}
+                    data-testid="input-new-user-email"
+                  />
+                  <Input
+                    placeholder="First Name"
+                    value={newUserFirstName}
+                    onChange={(e) => setNewUserFirstName(e.target.value)}
+                    data-testid="input-new-user-firstname"
+                  />
+                  <Input
+                    placeholder="Last Name"
+                    value={newUserLastName}
+                    onChange={(e) => setNewUserLastName(e.target.value)}
+                    data-testid="input-new-user-lastname"
+                  />
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      checked={newUserIsAdmin}
+                      onCheckedChange={setNewUserIsAdmin}
+                      data-testid="switch-new-user-admin"
+                    />
+                    <Label>Make Admin</Label>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => createUserMutation.mutate({
+                    email: newUserEmail,
+                    firstName: newUserFirstName,
+                    lastName: newUserLastName,
+                    isAdmin: newUserIsAdmin
+                  })}
+                  disabled={!newUserEmail || createUserMutation.isPending}
+                  data-testid="button-create-user"
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Add User
+                </Button>
+              </div>
               <p className="text-sm text-muted-foreground mb-4">
-                Manage admin access for users. Users must first log in to appear in this list.
+                Existing users and their admin status:
               </p>
               {allUsers.length === 0 ? (
-                <p className="text-muted-foreground text-center py-4">No users found. Users will appear after they log in.</p>
+                <p className="text-muted-foreground text-center py-4">No users found.</p>
               ) : (
                 <div className="space-y-2">
                   {allUsers.map((u) => (

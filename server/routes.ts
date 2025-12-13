@@ -104,6 +104,24 @@ export async function registerRoutes(
       res.status(500).json({ error: "Internal server error" });
     }
   });
+
+  app.post('/api/admin/users', isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const { email, firstName, lastName, isAdmin } = req.body;
+      if (!email) {
+        res.status(400).json({ error: "Email is required" });
+        return;
+      }
+      const user = await storage.createUser({ email, firstName, lastName, isAdmin });
+      res.status(201).json(user);
+    } catch (error: any) {
+      if (error?.code === '23505') {
+        res.status(400).json({ error: "A user with this email already exists" });
+        return;
+      }
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
   
   app.post("/api/partners", async (req, res) => {
     try {

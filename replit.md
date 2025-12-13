@@ -24,6 +24,9 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 - **Site Navigation**: Updated navigation with Home, About, Benefits, FAQ, and Blog links
 - **SEO Optimizations**: Share buttons on blog posts, Organization/WebSite/MobileApplication schema markup, FAQ schema, BlogPosting schema with dynamic social cards (og:image, twitter:image), speed optimizations (dns-prefetch, font optimization, canonical URL)
 - **Partners Page**: New /partners page listing partner companies (FitTeam, Wellzy Perks) with external links. Added "Partners" link to footer Resources section
+- **Privacy Policy Page**: New /privacy page with comprehensive privacy policy including data collection, usage, security, and HIPAA compliance information. InstaTrainMe® branding throughout.
+- **Terms & Conditions Page**: New /terms page with comprehensive terms of service covering user agreements, liability, intellectual property, and dispute resolution. InstaTrainMe® branding throughout.
+- **Footer Links Updated**: Sitemap section now uses internal routes (/about, /privacy, /terms) instead of external URLs
 
 ## User Preferences
 
@@ -56,7 +59,7 @@ Preferred communication style: Simple, everyday language.
 client/           # React frontend application
   src/
     components/   # UI components (shadcn/ui library)
-    pages/        # Route components (home, about, benefits, faq, blog, blog-admin, partners, not-found)
+    pages/        # Route components (home, about, benefits, faq, blog, blog-admin, partners, privacy-policy, terms, not-found)
     hooks/        # Custom React hooks
     lib/          # Utilities and query client
 server/           # Express backend

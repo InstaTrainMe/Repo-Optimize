@@ -98,24 +98,28 @@ function HeroSection() {
                     <h3 className="text-lg font-semibold mb-2">For Users</h3>
                     <p className="text-xl font-bold mb-4">Start my Fitness Journey</p>
                     <p className="text-sm text-white/70 mb-6">Are You a User?</p>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-3" role="group" aria-label="Download InstaTrainMe User App">
                       <a 
-                        href="https://play.google.com/store/apps/details?id=com.instatrainme.app" 
+                        href="https://play.google.com/store/apps/details?id=com.instatrainme.user&pli=1" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="block transition-transform hover:scale-105"
+                        aria-label="Download InstaTrainMe fitness app on Google Play Store"
+                        title="Download InstaTrainMe - Personal Trainer App for Android"
                         data-testid="link-user-google-play"
                       >
-                        <img src="https://instatrainme.com/googleplaydark.webp" alt="Get it on Google Play" className="h-10" />
+                        <img src="https://instatrainme.com/googleplaydark.webp" alt="Get InstaTrainMe Personal Trainer App on Google Play" className="h-10" />
                       </a>
                       <a 
-                        href="https://apps.apple.com/us/app/instatrainme/id1554932398" 
+                        href="https://apps.apple.com/us/app/instatrainme/id6499338812" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="block transition-transform hover:scale-105"
+                        aria-label="Download InstaTrainMe fitness app on Apple App Store"
+                        title="Download InstaTrainMe - Personal Trainer App for iOS"
                         data-testid="link-user-app-store"
                       >
-                        <img src="https://instatrainme.com/appstoreblack.webp" alt="Download on the App Store" className="h-10" />
+                        <img src="https://instatrainme.com/appstoreblack.webp" alt="Download InstaTrainMe Personal Trainer App on App Store" className="h-10" />
                       </a>
                     </div>
                   </div>
@@ -126,24 +130,28 @@ function HeroSection() {
                     <h3 className="text-lg font-semibold mb-2">For Trainers</h3>
                     <p className="text-xl font-bold mb-4">Provide Training with InstaTrainMe<sup className="text-xs">®</sup></p>
                     <p className="text-sm text-white/70 mb-6">Are You a Trainer?</p>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-3" role="group" aria-label="Download InstaTrainMe Trainer App">
                       <a 
-                        href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer" 
+                        href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer.app" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="block transition-transform hover:scale-105"
+                        aria-label="Download InstaTrainMe Trainer app on Google Play Store"
+                        title="Download InstaTrainMe Trainer - Manage Fitness Clients for Android"
                         data-testid="link-trainer-google-play"
                       >
-                        <img src="https://instatrainme.com/googleplaydark.webp" alt="Get it on Google Play" className="h-10" />
+                        <img src="https://instatrainme.com/googleplaydark.webp" alt="Get InstaTrainMe Trainer App on Google Play" className="h-10" />
                       </a>
                       <a 
-                        href="https://apps.apple.com/us/app/instatrainme-trainer/id1554932565" 
+                        href="https://apps.apple.com/us/app/instatrainme-trainer/id6499338940" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="block transition-transform hover:scale-105"
+                        aria-label="Download InstaTrainMe Trainer app on Apple App Store"
+                        title="Download InstaTrainMe Trainer - Manage Fitness Clients for iOS"
                         data-testid="link-trainer-app-store"
                       >
-                        <img src="https://instatrainme.com/appstoreblack.webp" alt="Download on the App Store" className="h-10" />
+                        <img src="https://instatrainme.com/appstoreblack.webp" alt="Download InstaTrainMe Trainer App on App Store" className="h-10" />
                       </a>
                     </div>
                   </div>

@@ -10,6 +10,7 @@ import Benefits from "@/pages/benefits";
 import FAQ from "@/pages/faq";
 import Blog from "@/pages/blog";
 import BlogAdmin from "@/pages/blog-admin";
+import Partners from "@/pages/partners";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/faq" component={FAQ} />
       <Route path="/blog" component={Blog} />
       <Route path="/admin/blog" component={BlogAdmin} />
+      <Route path="/partners" component={Partners} />
       <Route component={NotFound} />
     </Switch>
   );

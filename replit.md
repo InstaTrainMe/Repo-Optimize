@@ -23,6 +23,7 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 - **FAQ Page**: New /faq page with 11 accordion-style Q&A items covering common questions about the platform
 - **Site Navigation**: Updated navigation with Home, About, Benefits, FAQ, and Blog links
 - **SEO Optimizations**: Share buttons on blog posts, Organization/WebSite/MobileApplication schema markup, FAQ schema, BlogPosting schema with dynamic social cards (og:image, twitter:image), speed optimizations (dns-prefetch, font optimization, canonical URL)
+- **Partners Page**: New /partners page listing partner companies (FitTeam, Wellzy Perks) with external links. Added "Partners" link to footer Resources section
 
 ## User Preferences
 
@@ -55,7 +56,7 @@ Preferred communication style: Simple, everyday language.
 client/           # React frontend application
   src/
     components/   # UI components (shadcn/ui library)
-    pages/        # Route components (home, about, benefits, faq, blog, blog-admin, not-found)
+    pages/        # Route components (home, about, benefits, faq, blog, blog-admin, partners, not-found)
     hooks/        # Custom React hooks
     lib/          # Utilities and query client
 server/           # Express backend

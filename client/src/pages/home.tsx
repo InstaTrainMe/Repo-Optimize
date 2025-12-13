@@ -911,6 +911,11 @@ function Footer() {
                   Blog
                 </Link>
               </li>
+              <li>
+                <Link href="/partners" className="hover:text-[#667eea] transition-colors" data-testid="link-partners">
+                  Partners
+                </Link>
+              </li>
             </ul>
           </div>
           <div>

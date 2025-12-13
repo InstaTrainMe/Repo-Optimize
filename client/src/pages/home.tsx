@@ -59,14 +59,20 @@ function ThemeToggle() {
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-5 py-20 overflow-hidden bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#667eea]">
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
-                           radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
-        }} />
-      </div>
+    <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-5 py-20 overflow-hidden">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        poster="/hero-poster.jpg"
+        data-testid="video-hero-background"
+      >
+        <source src="/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#667eea]/70 via-[#764ba2]/60 to-[#667eea]/70" />
+      <div className="absolute inset-0 bg-black/30" />
       <ThemeToggle />
       <div className="relative z-10 max-w-4xl mx-auto">
         <h1 

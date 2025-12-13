@@ -77,9 +77,19 @@ export default function BlogAdmin() {
   const [newUserLastName, setNewUserLastName] = useState("");
   const [newUserIsAdmin, setNewUserIsAdmin] = useState(false);
 
+  const handleLogout = async () => {
+    try {
+      await apiRequest("POST", "/api/auth/logout");
+      queryClient.clear();
+      window.location.href = "/";
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to logout", variant: "destructive" });
+    }
+  };
+
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      window.location.href = "/api/login";
+      window.location.href = "/login";
     }
   }, [authLoading, isAuthenticated]);
 
@@ -199,9 +209,7 @@ export default function BlogAdmin() {
               <Link href="/">
                 <Button variant="outline">Go Home</Button>
               </Link>
-              <a href="/api/logout">
-                <Button variant="ghost">Logout</Button>
-              </a>
+              <Button variant="ghost" onClick={handleLogout}>Logout</Button>
             </div>
           </CardContent>
         </Card>
@@ -271,11 +279,15 @@ export default function BlogAdmin() {
               <Users className="w-4 h-4" />
             </Button>
             <ThemeToggle />
-            <a href="/api/logout">
-              <Button variant="ghost" size="icon" aria-label="Logout" data-testid="button-logout">
-                <LogOut className="w-4 h-4" />
-              </Button>
-            </a>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              aria-label="Logout" 
+              data-testid="button-logout"
+              onClick={handleLogout}
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </header>

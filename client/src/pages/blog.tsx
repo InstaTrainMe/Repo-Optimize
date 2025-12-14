@@ -7,6 +7,7 @@ import { ShareButtons } from "@/components/share-buttons";
 import { useLocation } from "wouter";
 import { useTheme } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
+import DOMPurify from "isomorphic-dompurify";
 import type { BlogPost } from "@shared/schema";
 
 function ThemeToggle() {
@@ -231,6 +232,17 @@ function formatDate(date: Date | string): string {
   });
 }
 
+function isHtmlContent(content: string): boolean {
+  return /<[a-z][\s\S]*>/i.test(content);
+}
+
+function sanitizeHtml(html: string): string {
+  return DOMPurify.sanitize(html, { 
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'a', 'img', 'figure', 'figcaption', 'div', 'span'],
+    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'target', 'rel', 'className', 'class', 'loading']
+  });
+}
+
 export default function Blog() {
   const [, setLocation] = useLocation();
   const { data: dbPosts = [], isLoading } = useQuery<BlogPost[]>({
@@ -296,11 +308,24 @@ export default function Blog() {
               </span>
             </div>
             <div className="prose prose-lg dark:prose-invert max-w-none">
-              {selectedPost.content.split('\n\n').map((paragraph, index) => (
-                <p key={index} className="text-foreground/80 leading-relaxed mb-4 whitespace-pre-line">
-                  {paragraph}
-                </p>
-              ))}
+              {isHtmlContent(selectedPost.content) ? (
+                <div 
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedPost.content) }}
+                  className="text-foreground/80 leading-relaxed"
+                  style={{
+                    '& img': { maxWidth: '100%', height: 'auto' },
+                    '& figure': { margin: '1.5em 0' },
+                    '& figcaption': { fontSize: '0.875em', color: 'var(--muted-foreground)' }
+                  } as any}
+                  data-testid="html-content"
+                />
+              ) : (
+                selectedPost.content.split('\n\n').map((paragraph, index) => (
+                  <p key={index} className="text-foreground/80 leading-relaxed mb-4 whitespace-pre-line">
+                    {paragraph}
+                  </p>
+                ))
+              )}
             </div>
             <div className="mt-12 pt-8 border-t border-border">
               <ShareButtons title={selectedPost.title} />

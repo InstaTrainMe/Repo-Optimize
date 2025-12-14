@@ -490,11 +490,12 @@ export default function BlogAdmin() {
                       id="content"
                       value={formData.content}
                       onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                      placeholder="Full blog post content (supports **bold** and other markdown)"
+                      placeholder="Full blog post content (supports HTML, **bold** markdown, and paste HTML examples like &lt;figure&gt;&lt;img&gt;&lt;/figure&gt;)"
                       rows={8}
                       required
                       data-testid="input-content"
                     />
+                    <p className="text-xs text-muted-foreground">Supports HTML content including images with figure elements</p>
                   </div>
 
                   <div className="flex items-center gap-3">

@@ -286,3 +286,60 @@
     inset: -1px;
   }
 }
+
+/* Blog content styling */
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+}
+
+.blog-content figure {
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+.blog-content figcaption {
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.blog-content figcaption a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+}
+
+.blog-content figcaption a:hover {
+  text-decoration: underline;
+}
+
+.blog-content p {
+  margin-bottom: 1rem;
+}
+
+.blog-content h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.blog-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.blog-content ul,
+.blog-content ol {
+  margin: 1rem 0 1rem 1.5rem;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+}

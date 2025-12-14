@@ -233,11 +233,14 @@ function formatDate(date: Date | string): string {
 }
 
 function isHtmlContent(content: string): boolean {
-  return /<[a-z][\s\S]*>/i.test(content);
+  // Check for both regular HTML tags and HTML entity-encoded tags
+  return /<[a-z][\s\S]*>/i.test(content) || /&lt;[a-z][\s\S]*&gt;/i.test(content);
 }
 
 function sanitizeHtml(html: string): string {
-  return DOMPurify.sanitize(html, { 
+  // Decode HTML entities first if present
+  const decoded = html.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&amp;/g, '&');
+  return DOMPurify.sanitize(decoded, { 
     ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'a', 'img', 'figure', 'figcaption', 'div', 'span'],
     ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'target', 'rel', 'className', 'class', 'loading']
   });
@@ -307,16 +310,11 @@ export default function Blog() {
                 {selectedPost.readTime}
               </span>
             </div>
-            <div className="prose prose-lg dark:prose-invert max-w-none">
+            <div className="prose prose-lg dark:prose-invert max-w-none blog-content">
               {isHtmlContent(selectedPost.content) ? (
                 <div 
                   dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedPost.content) }}
                   className="text-foreground/80 leading-relaxed"
-                  style={{
-                    '& img': { maxWidth: '100%', height: 'auto' },
-                    '& figure': { margin: '1.5em 0' },
-                    '& figcaption': { fontSize: '0.875em', color: 'var(--muted-foreground)' }
-                  } as any}
                   data-testid="html-content"
                 />
               ) : (

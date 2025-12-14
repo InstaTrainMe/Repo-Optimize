@@ -2,6 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Navigation } from "@/components/navigation";
 import { 
   Shield, 
@@ -295,14 +302,83 @@ function CTASection() {
                 Join thousands already transforming their fitness with InstaTrainMe®
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90 font-semibold text-lg px-8"
-                  data-testid="button-cta-get-started"
-                >
-                  Get Started Free
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button 
+                      size="lg" 
+                      className="bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90 font-semibold text-lg px-8"
+                      data-testid="button-cta-get-started"
+                    >
+                      Get Started Free
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-2xl z-[100]">
+                    <DialogHeader>
+                      <DialogTitle className="text-center text-2xl font-bold">Choose Your Path</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid md:grid-cols-2 gap-6 mt-4">
+                      <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-[#1a1f2e] to-[#2a2f3e] p-6 text-white">
+                        <div className="relative z-10">
+                          <h3 className="text-lg font-semibold mb-2">For Users</h3>
+                          <p className="text-xl font-bold mb-4">Start my Fitness Journey</p>
+                          <p className="text-sm text-white/70 mb-6">Are You a User?</p>
+                          <div className="flex flex-col gap-3" role="group" aria-label="Download InstaTrainMe User App">
+                            <a 
+                              href="https://play.google.com/store/apps/details?id=com.instatrainme.user&pli=1" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="transition-transform hover:scale-105"
+                              aria-label="Download InstaTrainMe fitness app on Google Play Store"
+                              title="Download InstaTrainMe - Personal Trainer App for Android"
+                            >
+                              <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12" />
+                            </a>
+                            <a 
+                              href="https://apps.apple.com/us/app/instatrainme/id6499338812" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="transition-transform hover:scale-105"
+                              aria-label="Download InstaTrainMe fitness app on Apple App Store"
+                              title="Download InstaTrainMe - Personal Trainer App for iOS"
+                            >
+                              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" className="h-12" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-[#3a3020] to-[#4a4030] p-6 text-white">
+                        <div className="relative z-10">
+                          <h3 className="text-lg font-semibold mb-2">For Trainers</h3>
+                          <p className="text-xl font-bold mb-4">Provide Training with InstaTrainMe<sup className="text-xs">®</sup></p>
+                          <p className="text-sm text-white/70 mb-6">Are You a Trainer?</p>
+                          <div className="flex flex-col gap-3" role="group" aria-label="Download InstaTrainMe Trainer App">
+                            <a 
+                              href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer.app" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="transition-transform hover:scale-105"
+                              aria-label="Download InstaTrainMe Trainer app on Google Play Store"
+                              title="Download InstaTrainMe Trainer - Manage Fitness Clients for Android"
+                            >
+                              <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12" />
+                            </a>
+                            <a 
+                              href="https://apps.apple.com/us/app/instatrainme-trainer/id6499338940" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="transition-transform hover:scale-105"
+                              aria-label="Download InstaTrainMe Trainer app on Apple App Store"
+                              title="Download InstaTrainMe Trainer - Manage Fitness Clients for iOS"
+                            >
+                              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" className="h-12" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
                 <Link href="/">
                   <Button 
                     size="lg" 

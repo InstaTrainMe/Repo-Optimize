@@ -91,25 +91,23 @@ export function Navigation() {
                           href="https://play.google.com/store/apps/details?id=com.instatrainme.user&pli=1" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                          className="transition-transform hover:scale-105"
                           aria-label="Download InstaTrainMe fitness app on Google Play Store"
                           title="Download InstaTrainMe - Personal Trainer App for Android"
                           data-testid="nav-link-user-google-play"
                         >
-                          <span>▶</span>
-                          <span>Get on Google Play</span>
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12" />
                         </a>
                         <a 
                           href="https://apps.apple.com/us/app/instatrainme/id6499338812" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                          className="transition-transform hover:scale-105"
                           aria-label="Download InstaTrainMe fitness app on Apple App Store"
                           title="Download InstaTrainMe - Personal Trainer App for iOS"
                           data-testid="nav-link-user-app-store"
                         >
-                          <span>🍎</span>
-                          <span>Get on App Store</span>
+                          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" className="h-12" />
                         </a>
                       </div>
                     </div>
@@ -124,25 +122,23 @@ export function Navigation() {
                           href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer.app" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                          className="transition-transform hover:scale-105"
                           aria-label="Download InstaTrainMe Trainer app on Google Play Store"
                           title="Download InstaTrainMe Trainer - Manage Fitness Clients for Android"
                           data-testid="nav-link-trainer-google-play"
                         >
-                          <span>▶</span>
-                          <span>Get on Google Play</span>
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12" />
                         </a>
                         <a 
                           href="https://apps.apple.com/us/app/instatrainme-trainer/id6499338940" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                          className="transition-transform hover:scale-105"
                           aria-label="Download InstaTrainMe Trainer app on Apple App Store"
                           title="Download InstaTrainMe Trainer - Manage Fitness Clients for iOS"
                           data-testid="nav-link-trainer-app-store"
                         >
-                          <span>🍎</span>
-                          <span>Get on App Store</span>
+                          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" className="h-12" />
                         </a>
                       </div>
                     </div>
@@ -196,23 +192,21 @@ export function Navigation() {
                                 href="https://play.google.com/store/apps/details?id=com.instatrainme.user&pli=1" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                                className="transition-transform hover:scale-105"
                                 aria-label="Download InstaTrainMe fitness app on Google Play Store"
                                 title="Download InstaTrainMe - Personal Trainer App for Android"
                               >
-                                <span>▶</span>
-                                <span>Get on Google Play</span>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12" />
                               </a>
                               <a 
                                 href="https://apps.apple.com/us/app/instatrainme/id6499338812" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                                className="transition-transform hover:scale-105"
                                 aria-label="Download InstaTrainMe fitness app on Apple App Store"
                                 title="Download InstaTrainMe - Personal Trainer App for iOS"
                               >
-                                <span>🍎</span>
-                                <span>Get on App Store</span>
+                                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" className="h-12" />
                               </a>
                             </div>
                           </div>
@@ -227,23 +221,21 @@ export function Navigation() {
                                 href="https://play.google.com/store/apps/details?id=com.instatrainme.trainer.app" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                                className="transition-transform hover:scale-105"
                                 aria-label="Download InstaTrainMe Trainer app on Google Play Store"
                                 title="Download InstaTrainMe Trainer - Manage Fitness Clients for Android"
                               >
-                                <span>▶</span>
-                                <span>Get on Google Play</span>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" className="h-12" />
                               </a>
                               <a 
                                 href="https://apps.apple.com/us/app/instatrainme-trainer/id6499338940" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                                className="transition-transform hover:scale-105"
                                 aria-label="Download InstaTrainMe Trainer app on Apple App Store"
                                 title="Download InstaTrainMe Trainer - Manage Fitness Clients for iOS"
                               >
-                                <span>🍎</span>
-                                <span>Get on App Store</span>
+                                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on App Store" className="h-12" />
                               </a>
                             </div>
                           </div>

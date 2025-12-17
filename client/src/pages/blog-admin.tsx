@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
+import { convertPlainTextToHtml } from "@/lib/contentFormatter";
 import type { BlogPost, User } from "@shared/schema";
 
 function ThemeToggle() {
@@ -240,10 +241,14 @@ export default function BlogAdmin() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const processedData = {
+      ...formData,
+      content: convertPlainTextToHtml(formData.content)
+    };
     if (editingId) {
-      updateMutation.mutate({ id: editingId, data: formData });
+      updateMutation.mutate({ id: editingId, data: processedData });
     } else {
-      createMutation.mutate(formData);
+      createMutation.mutate(processedData);
     }
   };
 
@@ -490,12 +495,15 @@ export default function BlogAdmin() {
                       id="content"
                       value={formData.content}
                       onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                      placeholder="Full blog post content (supports HTML, **bold** markdown, and paste HTML examples like &lt;figure&gt;&lt;img&gt;&lt;/figure&gt;)"
+                      placeholder="Full blog post content. Start list items with - or * for bullet lists. Supports HTML with figure/img tags."
                       rows={8}
                       required
                       data-testid="input-content"
                     />
-                    <p className="text-xs text-muted-foreground">Supports HTML content including images with figure elements</p>
+                    <p className="text-xs text-muted-foreground">
+                      • Use dashes (-) or asterisks (*) to create lists<br/>
+                      • Paste HTML with images: &lt;figure&gt;&lt;img src=&quot;...&quot;&gt;&lt;figcaption&gt;...&lt;/figcaption&gt;&lt;/figure&gt;
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-3">

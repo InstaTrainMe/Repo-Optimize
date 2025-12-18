@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useCanonical } from "@/hooks/useCanonical";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, User, Moon, Sun, Settings } from "lucide-react";
@@ -247,6 +248,7 @@ function sanitizeHtml(html: string): string {
 }
 
 export default function Blog() {
+  useCanonical("/blog");
   const [, setLocation] = useLocation();
   const { data: dbPosts = [], isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog", "published"],

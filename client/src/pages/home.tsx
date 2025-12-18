@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useCanonical } from "@/hooks/useCanonical";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useTheme } from "@/components/theme-provider";
@@ -966,6 +967,7 @@ function SocialShareButtons() {
 }
 
 export default function Home() {
+  useCanonical("/");
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

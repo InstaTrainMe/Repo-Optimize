@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { useCanonical } from "@/hooks/useCanonical";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTheme } from "@/components/theme-provider";
@@ -38,6 +39,7 @@ const partners = [
 ];
 
 export default function Partners() {
+  useCanonical("/partners");
   return (
     <div className="min-h-screen bg-background">
       <section className="relative py-20 px-5 bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#667eea]">

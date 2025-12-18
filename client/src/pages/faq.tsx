@@ -1,5 +1,6 @@
 import { useLocation } from "wouter";
 import { useEffect } from "react";
+import { useCanonical } from "@/hooks/useCanonical";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -108,6 +109,7 @@ const faqs = [
 ];
 
 export default function FAQ() {
+  useCanonical("/faq");
   const [, setLocation] = useLocation();
 
   return (

@@ -1,3 +1,4 @@
+import { useCanonical } from "@/hooks/useCanonical";
 import { Navigation } from "@/components/navigation";
 import { Link } from "wouter";
 
@@ -11,6 +12,7 @@ function SEOHead() {
 }
 
 export default function PrivacyPolicy() {
+  useCanonical("/privacy");
   return (
     <div className="min-h-screen bg-background">
       <SEOHead />

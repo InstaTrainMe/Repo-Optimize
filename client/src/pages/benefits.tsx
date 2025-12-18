@@ -1,3 +1,4 @@
+import { useCanonical } from "@/hooks/useCanonical";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -468,6 +469,7 @@ function CTASection() {
 }
 
 export default function Benefits() {
+  useCanonical("/benefits");
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

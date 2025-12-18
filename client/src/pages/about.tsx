@@ -1,4 +1,5 @@
 import { useLocation } from "wouter";
+import { useCanonical } from "@/hooks/useCanonical";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Navigation } from "@/components/navigation";
@@ -124,6 +125,7 @@ const benefits = [
 ];
 
 export default function About() {
+  useCanonical("/about");
   const [, setLocation] = useLocation();
 
   return (

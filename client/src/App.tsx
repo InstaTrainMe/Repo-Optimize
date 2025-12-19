@@ -13,6 +13,7 @@ import Blog from "@/pages/blog";
 import BlogAdmin from "@/pages/blog-admin";
 import Login from "@/pages/login";
 import Partners from "@/pages/partners";
+import Trainers from "@/pages/trainers";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import Terms from "@/pages/terms";
 import NotFound from "@/pages/not-found";
@@ -37,6 +38,7 @@ function Router() {
       <Route path="/admin/blog" component={BlogAdmin} />
       <Route path="/login" component={Login} />
       <Route path="/partners" component={Partners} />
+      <Route path="/trainers" component={Trainers} />
       <Route path="/privacy" component={PrivacyPolicy} />
       <Route path="/privacypolicy" component={PrivacyPolicy} />
       <Route path="/terms" component={Terms} />

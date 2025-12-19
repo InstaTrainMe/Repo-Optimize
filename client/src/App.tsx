@@ -34,6 +34,7 @@ function Router() {
       <Route path="/howitworks" component={Benefits} />
       <Route path="/faq" component={FAQ} />
       <Route path="/blog" component={Blog} />
+      <Route path="/blog/:identifier" component={Blog} />
       <Route path="/blogs" component={Blog} />
       <Route path="/admin/blog" component={BlogAdmin} />
       <Route path="/login" component={Login} />

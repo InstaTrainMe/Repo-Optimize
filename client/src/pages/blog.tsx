@@ -250,9 +250,15 @@ function sanitizeHtml(html: string): string {
   });
 }
 
+interface RouteParams {
+  identifier?: string;
+}
+
 export default function Blog() {
-  useCanonical("/blog");
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
+  const params = location.match(/\/blog\/([^\/]+)/);
+  const identifier = params ? params[1] : undefined;
+
   const { data: dbPosts = [], isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog", "published"],
     queryFn: async () => {
@@ -266,7 +272,38 @@ export default function Blog() {
     ? dbPosts.map(p => ({ ...p, createdAt: p.createdAt }))
     : fallbackPosts;
 
-  const [selectedPost, setSelectedPost] = useState<DisplayPost | null>(null);
+  // Find post by slug or ID if identifier provided
+  const selectedPost = identifier 
+    ? blogPosts.find(p => p.slug === identifier || p.id === identifier) || null
+    : null;
+
+  // Set canonical URL based on context
+  useEffect(() => {
+    if (selectedPost) {
+      const url = selectedPost.slug 
+        ? `https://instatrainme.com/blog/${selectedPost.slug}`
+        : `https://instatrainme.com/blog/${selectedPost.id}`;
+      const canonical = document.querySelector("link[rel='canonical']");
+      if (canonical) {
+        canonical.setAttribute("href", url);
+      } else {
+        const link = document.createElement("link");
+        link.rel = "canonical";
+        link.href = url;
+        document.head.appendChild(link);
+      }
+    } else {
+      const canonical = document.querySelector("link[rel='canonical']");
+      if (canonical) {
+        canonical.setAttribute("href", "https://instatrainme.com/blog");
+      } else {
+        const link = document.createElement("link");
+        link.rel = "canonical";
+        link.href = "https://instatrainme.com/blog";
+        document.head.appendChild(link);
+      }
+    }
+  }, [selectedPost]);
 
   if (selectedPost) {
     return (
@@ -276,7 +313,7 @@ export default function Blog() {
         <div className="max-w-4xl mx-auto px-5 py-4">
           <Button 
             variant="ghost" 
-            onClick={() => setSelectedPost(null)}
+            onClick={() => setLocation("/blog")}
             aria-label="Go back to blog listing"
             data-testid="button-back"
           >
@@ -368,7 +405,10 @@ export default function Blog() {
             <Card
               key={post.id}
               className="border-0 shadow-lg transition-all duration-300 hover:-translate-y-2 cursor-pointer group"
-              onClick={() => setSelectedPost(post)}
+              onClick={() => {
+                const url = post.slug ? `/blog/${post.slug}` : `/blog/${post.id}`;
+                setLocation(url);
+              }}
               data-testid={`card-blog-${post.id}`}
             >
               {post.imageUrl && (

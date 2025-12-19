@@ -6,6 +6,8 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 
 ## Recent Changes (December 2025)
 
+- **Blog URL-Based Routing**: Fixed interlinking issue by implementing URL-based routing for individual blog posts. Each post now has a unique URL at `/blog/:slug` (e.g., `/blog/5-ways-to-stay-motivated`) enabling proper internal linking and SEO. Posts can be accessed by slug or ID as fallback. Canonical URLs properly set for each post.
+- **Blog Slug Generation**: All blog posts automatically generate clean URL-friendly slugs from titles (3 existing posts migrated, new posts auto-generate). Slugs enable better readability and SEO compared to numeric IDs.
 - **Admin Authentication**: Implemented Replit Auth-based admin authentication for blog management. Users must log in and have admin privileges to access `/admin/blog`. Admin users can manage other user's admin status.
 - **Database-Driven Blog System**: Admin interface at `/admin/blog` for creating, editing, publishing, and deleting blog posts. Protected by authentication. Blog page fetches published posts from the database with fallback to sample content.
 - **Freshworks Chatbot**: Integrated Freshworks chat widget for customer support.
@@ -55,7 +57,7 @@ Preferred communication style: Simple, everyday language.
 ### Data Storage
 - **ORM**: Drizzle ORM configured for PostgreSQL
 - **Schema Location**: `shared/schema.ts` contains all table definitions
-- **Current Tables**: users, partner_submissions (B2B with companyName, contactName, email, organizationType, message), gym_submissions, newsletter_subscriptions, blog_posts (title, excerpt, content, category, author, readTime, imageUrl, published, createdAt)
+- **Current Tables**: users, partner_submissions (B2B with companyName, contactName, email, organizationType, message), gym_submissions, newsletter_subscriptions, blog_posts (title, slug, excerpt, content, category, author, readTime, imageUrl, published, createdAt)
 - **Development Storage**: MemStorage class provides in-memory fallback when database unavailable
 
 ### Project Structure

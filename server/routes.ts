@@ -5,6 +5,7 @@ import { insertPartnerSchema, insertGymSchema, insertNewsletterSchema, insertBlo
 import { z } from "zod";
 import { setupAuth, isAuthenticated, isAdmin, seedAdminUser } from "./auth";
 import { sendPartnerNotification, sendGymNotification, sendNewsletterNotification } from "./email";
+import { generateSlug } from "./utils";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -13,6 +14,24 @@ export async function registerRoutes(
   
   await setupAuth(app);
   await seedAdminUser();
+
+  // Migrate existing blog posts to generate slugs
+  app.post("/api/migrate-blog-slugs", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const posts = await storage.getBlogPosts(false);
+      let updated = 0;
+      for (const post of posts) {
+        if (!post.slug) {
+          const slug = generateSlug(post.title);
+          await storage.updateBlogPost(post.id, { slug });
+          updated++;
+        }
+      }
+      res.json({ message: `Updated ${updated} posts with slugs` });
+    } catch (error) {
+      res.status(500).json({ error: "Migration failed" });
+    }
+  });
 
   // Dynamic sitemap.xml generation
   app.get("/sitemap.xml", async (req, res) => {
@@ -54,8 +73,9 @@ export async function registerRoutes(
       // Add blog posts
       for (const post of blogPosts) {
         const postDate = new Date(post.createdAt).toISOString().split('T')[0];
+        const postUrl = post.slug ? `/blog/${post.slug}` : `/blog/${post.id}`;
         xml += `  <url>
-    <loc>${baseUrl}/blog/${post.id}</loc>
+    <loc>${baseUrl}${postUrl}</loc>
     <lastmod>${postDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -189,6 +209,19 @@ export async function registerRoutes(
       const publishedOnly = req.query.published === "true";
       const posts = await storage.getBlogPosts(publishedOnly);
       res.json(posts);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.get("/api/blog/slug/:slug", async (req, res) => {
+    try {
+      const post = await storage.getBlogPostBySlug(req.params.slug);
+      if (!post) {
+        res.status(404).json({ error: "Blog post not found" });
+        return;
+      }
+      res.json(post);
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }

@@ -9,6 +9,7 @@ import {
 import { randomUUID } from "crypto";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
+import { generateSlug } from "./utils";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -27,6 +28,7 @@ export interface IStorage {
   getNewsletterByEmail(email: string): Promise<Newsletter | undefined>;
   getBlogPosts(publishedOnly?: boolean): Promise<BlogPost[]>;
   getBlogPost(id: string): Promise<BlogPost | undefined>;
+  getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: string, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: string): Promise<boolean>;
@@ -151,8 +153,14 @@ export class DatabaseStorage implements IStorage {
     return post;
   }
 
+  async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post;
+  }
+
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
-    const [post] = await db.insert(blogPosts).values(insertPost).returning();
+    const slug = generateSlug(insertPost.title);
+    const [post] = await db.insert(blogPosts).values({ ...insertPost, slug }).returning();
     return post;
   }
 

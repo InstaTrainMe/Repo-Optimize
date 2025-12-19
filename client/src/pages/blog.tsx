@@ -50,7 +50,9 @@ function SEOHead({ post }: { post?: DisplayPost }) {
     };
 
     if (post) {
-      const postUrl = `https://instatrainme.com/blog/${post.id}`;
+      const postUrl = post.slug 
+        ? `https://instatrainme.com/blog/${post.slug}`
+        : `https://instatrainme.com/blog/${post.id}`;
       const postImage = "https://instatrainme.com/og-blog.png";
       
       document.title = `${post.title} | InstaTrainMe Blog`;
@@ -114,6 +116,7 @@ function SEOHead({ post }: { post?: DisplayPost }) {
 interface DisplayPost {
   id: string;
   title: string;
+  slug?: string | null;
   excerpt: string;
   content: string;
   category: string;

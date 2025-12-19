@@ -73,6 +73,7 @@ export type Newsletter = typeof newsletterSubscriptions.$inferSelect;
 export const blogPosts = pgTable("blog_posts", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   title: text("title").notNull(),
+  slug: text("slug"),
   excerpt: text("excerpt").notNull(),
   content: text("content").notNull(),
   category: text("category").notNull(),
@@ -85,6 +86,7 @@ export const blogPosts = pgTable("blog_posts", {
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
+  slug: true,
   createdAt: true,
 });
 

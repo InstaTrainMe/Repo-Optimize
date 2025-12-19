@@ -247,20 +247,9 @@ function sanitizeHtml(html: string): string {
   });
 }
 
-interface RouteParams {
-  slug?: string;
-}
-
-export default function Blog(params: RouteParams) {
-  const slug = params.slug;
+export default function Blog() {
+  useCanonical("/blog");
   const [, setLocation] = useLocation();
-  
-  if (slug) {
-    useCanonical(`/blog/${slug}`);
-  } else {
-    useCanonical("/blog");
-  }
-
   const { data: dbPosts = [], isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog", "published"],
     queryFn: async () => {
@@ -274,7 +263,7 @@ export default function Blog(params: RouteParams) {
     ? dbPosts.map(p => ({ ...p, createdAt: p.createdAt }))
     : fallbackPosts;
 
-  const selectedPost = slug ? blogPosts.find((p: any) => p.slug === slug) || null : null;
+  const [selectedPost, setSelectedPost] = useState<DisplayPost | null>(null);
 
   if (selectedPost) {
     return (
@@ -284,7 +273,7 @@ export default function Blog(params: RouteParams) {
         <div className="max-w-4xl mx-auto px-5 py-4">
           <Button 
             variant="ghost" 
-            onClick={() => setLocation("/blog")}
+            onClick={() => setSelectedPost(null)}
             aria-label="Go back to blog listing"
             data-testid="button-back"
           >
@@ -372,11 +361,11 @@ export default function Blog(params: RouteParams) {
           </p>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
-          {blogPosts.map((post: any) => (
+          {blogPosts.map((post) => (
             <Card
               key={post.id}
               className="border-0 shadow-lg transition-all duration-300 hover:-translate-y-2 cursor-pointer group"
-              onClick={() => setLocation(`/blog/${post.slug || post.id}`)}
+              onClick={() => setSelectedPost(post)}
               data-testid={`card-blog-${post.id}`}
             >
               {post.imageUrl && (

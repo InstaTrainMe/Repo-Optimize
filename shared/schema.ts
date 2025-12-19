@@ -73,7 +73,6 @@ export type Newsletter = typeof newsletterSubscriptions.$inferSelect;
 export const blogPosts = pgTable("blog_posts", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   title: text("title").notNull(),
-  slug: text("slug").notNull().unique(),
   excerpt: text("excerpt").notNull(),
   content: text("content").notNull(),
   category: text("category").notNull(),

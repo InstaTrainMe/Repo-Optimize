@@ -15,7 +15,6 @@ import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { convertPlainTextToHtml } from "@/lib/contentFormatter";
-import { slugify } from "@/lib/slugify";
 import type { BlogPost, User } from "@shared/schema";
 
 function ThemeToggle() {
@@ -47,7 +46,6 @@ const categories = [
 
 interface BlogFormData {
   title: string;
-  slug: string;
   excerpt: string;
   content: string;
   category: string;
@@ -59,7 +57,6 @@ interface BlogFormData {
 
 const emptyForm: BlogFormData = {
   title: "",
-  slug: "",
   excerpt: "",
   content: "",
   category: "Training",
@@ -230,7 +227,6 @@ export default function BlogAdmin() {
   const handleEdit = (post: BlogPost) => {
     setFormData({
       title: post.title,
-      slug: (post as any).slug || slugify(post.title),
       excerpt: post.excerpt,
       content: post.content,
       category: post.category,
@@ -245,10 +241,8 @@ export default function BlogAdmin() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const slug = formData.slug || slugify(formData.title);
     const processedData = {
       ...formData,
-      slug,
       content: convertPlainTextToHtml(formData.content)
     };
     if (editingId) {
@@ -418,18 +412,6 @@ export default function BlogAdmin() {
                       required
                       data-testid="input-title"
                     />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="slug">URL Slug</Label>
-                    <Input
-                      id="slug"
-                      value={formData.slug}
-                      onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                      placeholder={formData.title ? slugify(formData.title) : "auto-generated from title"}
-                      data-testid="input-slug"
-                    />
-                    <p className="text-xs text-muted-foreground">URL-friendly version of the title</p>
                   </div>
 
                   <div className="space-y-2">

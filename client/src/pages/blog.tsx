@@ -255,6 +255,12 @@ function sanitizeHtml(html: string): string {
   });
 }
 
+function convertUrlsToLinks(text: string): string {
+  // Match URLs starting with http:// or https://
+  const urlRegex = /(https?:\/\/[^\s<>]+)/g;
+  return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-[#667eea] hover:underline">$1</a>');
+}
+
 interface RouteParams {
   identifier?: string;
 }
@@ -369,9 +375,11 @@ export default function Blog() {
                 />
               ) : (
                 selectedPost.content.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="text-foreground/80 leading-relaxed mb-4 whitespace-pre-line">
-                    {paragraph}
-                  </p>
+                  <div
+                    key={index}
+                    className="text-foreground/80 leading-relaxed mb-4 whitespace-pre-line"
+                    dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(paragraph) }}
+                  />
                 ))
               )}
             </div>

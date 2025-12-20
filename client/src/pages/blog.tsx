@@ -246,19 +246,21 @@ function isHtmlContent(content: string): boolean {
   return /<[a-z][\s\S]*>/i.test(content) || /&lt;[a-z][\s\S]*&gt;/i.test(content);
 }
 
-function sanitizeHtml(html: string): string {
-  // Decode HTML entities first if present
-  const decoded = html.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&amp;/g, '&');
-  return DOMPurify.sanitize(decoded, { 
-    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'a', 'img', 'figure', 'figcaption', 'div', 'span'],
-    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'target', 'rel', 'className', 'class', 'loading']
-  });
-}
-
 function convertUrlsToLinks(text: string): string {
   // Match URLs starting with http:// or https://
   const urlRegex = /(https?:\/\/[^\s<>]+)/g;
   return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-[#667eea] hover:underline">$1</a>');
+}
+
+function sanitizeHtml(html: string): string {
+  // Decode HTML entities first if present
+  const decoded = html.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&amp;/g, '&');
+  // Convert plain text URLs to links before sanitizing
+  const withLinks = convertUrlsToLinks(decoded);
+  return DOMPurify.sanitize(withLinks, { 
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'a', 'img', 'figure', 'figcaption', 'div', 'span'],
+    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'target', 'rel', 'className', 'class', 'loading']
+  });
 }
 
 interface RouteParams {

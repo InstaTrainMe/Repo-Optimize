@@ -55,15 +55,20 @@ function SEOHead({ post }: { post?: DisplayPost }) {
         : `https://instatrainme.com/blog/${post.id}`;
       const postImage = "https://instatrainme.com/og-blog.png";
       
+      // Trim description to 160 chars to prevent truncation in search results
+      const trimmedDescription = post.excerpt.length > 160 
+        ? post.excerpt.substring(0, 157) + "..."
+        : post.excerpt;
+      
       document.title = `${post.title} | InstaTrainMe Blog`;
-      setMeta('meta[name="description"]', "content", post.excerpt);
+      setMeta('meta[name="description"]', "content", trimmedDescription);
       setMeta('meta[property="og:title"]', "content", post.title);
-      setMeta('meta[property="og:description"]', "content", post.excerpt);
+      setMeta('meta[property="og:description"]', "content", trimmedDescription);
       setMeta('meta[property="og:type"]', "content", "article");
       setMeta('meta[property="og:url"]', "content", postUrl);
       setMeta('meta[property="og:image"]', "content", postImage);
       setMeta('meta[name="twitter:title"]', "content", post.title);
-      setMeta('meta[name="twitter:description"]', "content", post.excerpt);
+      setMeta('meta[name="twitter:description"]', "content", trimmedDescription);
       setMeta('meta[name="twitter:card"]', "content", "summary_large_image");
       setMeta('meta[name="twitter:image"]', "content", postImage);
 
@@ -326,9 +331,12 @@ export default function Blog() {
             <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-[#667eea]/10 to-[#764ba2]/10 text-[#667eea] mb-6">
               {selectedPost.category}
             </span>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-6" data-testid="text-article-title">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6" data-testid="text-article-title">
               {selectedPost.title}
             </h1>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+              {selectedPost.excerpt}
+            </p>
             {selectedPost.imageUrl && (
               <div className="mb-8 rounded-lg overflow-hidden">
                 <img 
@@ -368,7 +376,32 @@ export default function Blog() {
               )}
             </div>
             <div className="mt-12 pt-8 border-t border-border">
-              <ShareButtons title={selectedPost.title} />
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-foreground mb-4">Share This Article</h2>
+                <ShareButtons title={selectedPost.title} />
+              </div>
+              <div className="mt-8">
+                <h2 className="text-xl font-bold text-foreground mb-4">Related Articles</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {blogPosts
+                    .filter(p => p.id !== selectedPost.id && p.category === selectedPost.category)
+                    .slice(0, 2)
+                    .map((relatedPost) => (
+                      <button
+                        key={relatedPost.id}
+                        onClick={() => {
+                          const url = relatedPost.slug ? `/blog/${relatedPost.slug}` : `/blog/${relatedPost.id}`;
+                          setLocation(url);
+                        }}
+                        className="text-left p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors"
+                        data-testid={`link-related-${relatedPost.id}`}
+                      >
+                        <p className="font-semibold text-foreground hover:text-[#667eea]">{relatedPost.title}</p>
+                        <p className="text-sm text-muted-foreground mt-2">{relatedPost.excerpt.substring(0, 80)}...</p>
+                      </button>
+                    ))}
+                </div>
+              </div>
             </div>
           </article>
         </main>

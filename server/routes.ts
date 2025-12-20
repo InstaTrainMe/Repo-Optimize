@@ -70,17 +70,20 @@ export async function registerRoutes(
 `;
       }
       
-      // Add blog posts
+      // Add blog posts (only use slug-based URLs to avoid duplicates)
       for (const post of blogPosts) {
         const postDate = new Date(post.createdAt).toISOString().split('T')[0];
-        const postUrl = post.slug ? `/blog/${post.slug}` : `/blog/${post.id}`;
-        xml += `  <url>
+        // Only include slug-based URLs to avoid duplicate content issues
+        if (post.slug) {
+          const postUrl = `/blog/${post.slug}`;
+          xml += `  <url>
     <loc>${baseUrl}${postUrl}</loc>
     <lastmod>${postDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 `;
+        }
       }
       
       xml += `</urlset>`;

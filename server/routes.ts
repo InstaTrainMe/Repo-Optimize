@@ -41,7 +41,7 @@ export async function registerRoutes(
   app.get(["/privacypolicy", "/privacy-policy"], (req, res) => res.redirect(301, "/privacy"));
   app.get(["/termsandconditions", "/terms-and-conditions"], (req, res) => res.redirect(301, "/terms"));
   
-  // Specific trainer redirects for geographic regions identified in Soft 404 report
+  // Specific trainer redirects for geographic regions identified in GSC reports
   app.get("/trainers/wy", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ne", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/nd", (req, res) => res.redirect(301, "/trainers"));
@@ -56,7 +56,7 @@ export async function registerRoutes(
   app.get("/trainers/tx", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ia", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/co", (req, res) => res.redirect(301, "/trainers"));
-  2→  app.get("/trainers/hi", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/hi", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ga", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ok", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/wi", (req, res) => res.redirect(301, "/trainers"));

@@ -11,8 +11,10 @@ export function useCanonical(path: string) {
       document.head.appendChild(canonicalLink);
     }
     
-    // Build the canonical URL (without query parameters)
+    // Build the canonical URL (ensure no trailing slash unless it's the root)
     const baseUrl = 'https://www.instatrainme.com';
-    canonicalLink.href = `${baseUrl}${path}`;
+    const cleanPath = path === '/' ? '' : path.replace(/\/$/, '');
+    const finalUrl = path === '/' ? `${baseUrl}/` : `${baseUrl}${cleanPath}`;
+    canonicalLink.href = finalUrl;
   }, [path]);
 }

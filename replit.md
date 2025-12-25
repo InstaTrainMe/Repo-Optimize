@@ -26,7 +26,8 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 - **Site Navigation**: Updated navigation with Home, About, Benefits, FAQ, and Blog links
 - **SEO Redirects**: Implemented 301 redirects for legacy URLs (`/aboutus`, `/newsletter1`, `/howitworks`, `/contactus`, `/services`, `/terms-of-service`, `/waitlistsignup`) and consolidated all geographic trainer paths to `/trainers`.
 - **Subdomain Monitoring**: Identified that `url7480.instatrainme.com` and `email.instatrainme.com` are managed by third-party services (likely Mailgun/Email tracking) and their 404s in GSC do not impact the root domain's SEO health.
-- **Canonicalization**: Enforced `https://www.instatrainme.com` as the primary canonical domain via server-side redirects and updated `useCanonical` hook to ignore tracking parameters.
+- **SEO Canonicalization**: Enforced `https://www.instatrainme.com` as the primary canonical domain via server-side redirects. Now stripping all query parameters (e.g., `?ref=producthunt`) at the server level to fix "Alternate page with proper canonical tag" issues.
+- **Canonical Hook**: Updated `useCanonical` hook to ensure consistent URL structure without trailing slashes for internal pages.
 - **Robots.txt Optimization**: Configured `robots.txt` to explicitly allow root crawling while blocking `/api/` and `/admin/` paths to conserve crawl budget.
 - **Mailgun Integration**: Email notifications send to Sales@instatrainme.com for forms.
 

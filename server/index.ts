@@ -20,12 +20,16 @@ app.use(compression());
 app.use((req, res, next) => {
   const host = req.get("host");
   // Check for non-www or non-https in production
-  const isProduction = process.env.NODE_ENV === "production";
-  const isNonWww = host && !host.startsWith("www.");
-  const isHttp = req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] !== "https";
+  if (isProduction) {
+    // Check for non-www or non-https or query parameters
+    const isNonWww = host && !host.startsWith("www.");
+    const isHttp = req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] !== "https";
+    const hasQueryParams = Object.keys(req.query).length > 0;
 
-  if (isProduction && (isNonWww || isHttp)) {
-    return res.redirect(301, `https://www.instatrainme.com${req.originalUrl}`);
+    if (isNonWww || isHttp || hasQueryParams) {
+      // Always redirect to the clean version (no query params)
+      return res.redirect(301, `https://www.instatrainme.com${req.path}`);
+    }
   }
   next();
 });

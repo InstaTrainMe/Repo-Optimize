@@ -24,15 +24,11 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 - **About Us Page**: New /about page with Why Choose InstaTrainMe, How It Works (4 steps), and Transform Your Fitness Journey sections
 - **FAQ Page**: New /faq page with 11 accordion-style Q&A items covering common questions about the platform
 - **Site Navigation**: Updated navigation with Home, About, Benefits, FAQ, and Blog links
-- **SEO Optimizations**: Share buttons on blog posts, Organization/WebSite/MobileApplication schema markup, FAQ schema, BlogPosting schema with dynamic social cards (og:image, twitter:image), speed optimizations (dns-prefetch, font optimization, canonical URL)
-- **Partners Page**: New /partners page listing partner companies (FitTeam, Wellzy Perks) with external links. Added "Partners" link to footer Resources section
-- **Privacy Policy Page**: New /privacy page with comprehensive privacy policy including data collection, usage, security, and HIPAA compliance information. InstaTrainMe® branding throughout.
-- **Terms & Conditions Page**: New /terms page with comprehensive terms of service covering user agreements, liability, intellectual property, and dispute resolution. InstaTrainMe® branding throughout.
-- **Footer Links Updated**: Sitemap section now uses internal routes (/about, /privacy, /terms) instead of external URLs
-- **Dynamic Sitemap**: Dynamic /sitemap.xml endpoint that auto-generates XML with all static pages and published blog posts. Includes proper lastmod, changefreq, and priority values for SEO
-- **Blog Post Images**: Added imageUrl field to blog posts. Admin can add image URLs when creating/editing posts. Images display on blog cards and article pages.
-- **User Management**: Admin panel now includes ability to create new users with email, first name, last name, and admin status toggle.
-- **Email Notifications**: Mailgun integration sends email notifications to Sales@instatrainme.com when forms are submitted (partnership inquiries, gym registrations, newsletter subscriptions). Requires MAILGUN_API_KEY and MAILGUN_DOMAIN secrets.
+- **SEO Redirects**: Implemented 301 redirects for legacy URLs (`/aboutus`, `/newsletter1`, `/howitworks`, `/contactus`, `/services`, `/terms-of-service`, `/waitlistsignup`) and consolidated all geographic trainer paths to `/trainers`.
+- **Subdomain Monitoring**: Identified that `url7480.instatrainme.com` and `email.instatrainme.com` are managed by third-party services (likely Mailgun/Email tracking) and their 404s in GSC do not impact the root domain's SEO health.
+- **Canonicalization**: Enforced `https://www.instatrainme.com` as the primary canonical domain via server-side redirects and updated `useCanonical` hook to ignore tracking parameters.
+- **Robots.txt Optimization**: Configured `robots.txt` to explicitly allow root crawling while blocking `/api/` and `/admin/` paths to conserve crawl budget.
+- **Mailgun Integration**: Email notifications send to Sales@instatrainme.com for forms.
 
 ## User Preferences
 

@@ -33,6 +33,18 @@ export async function registerRoutes(
     }
   });
 
+  // Handle 301 redirects for legacy URLs
+  app.get(["/aboutus", "/about-us"], (req, res) => res.redirect(301, "/about"));
+  app.get(["/newsletter1", "/subscribe"], (req, res) => res.redirect(301, "/"));
+  app.get("/howitworks", (req, res) => res.redirect(301, "/benefits"));
+  app.get(["/privacypolicy", "/privacy-policy"], (req, res) => res.redirect(301, "/privacy"));
+  app.get(["/termsandconditions", "/terms-and-conditions"], (req, res) => res.redirect(301, "/terms"));
+  
+  // Specific trainer redirects for geographic regions identified in Soft 404 report
+  app.get("/trainers/wy", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ne", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ca/san-diego", (req, res) => res.redirect(301, "/trainers"));
+
   // Dynamic sitemap.xml generation
   app.get("/sitemap.xml", async (req, res) => {
     try {

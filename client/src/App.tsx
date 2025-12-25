@@ -31,7 +31,6 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/benefits" component={Benefits} />
-      <Route path="/howitworks" component={Benefits} />
       <Route path="/faq" component={FAQ} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:identifier" component={Blog} />
@@ -41,9 +40,7 @@ function Router() {
       <Route path="/partners" component={Partners} />
       <Route path="/trainers" component={Trainers} />
       <Route path="/privacy" component={PrivacyPolicy} />
-      <Route path="/privacypolicy" component={PrivacyPolicy} />
       <Route path="/terms" component={Terms} />
-      <Route path="/termsandconditions" component={Terms} />
       <Route path="/contactus" component={Home} />
       <Route path="/waitlistsignup" component={Home} />
       <Route component={NotFound} />

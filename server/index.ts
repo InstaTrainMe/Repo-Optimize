@@ -20,6 +20,7 @@ app.use(compression());
 app.use((req, res, next) => {
   const host = req.get("host");
   // Check for non-www or non-https in production
+  const isProduction = process.env.NODE_ENV === "production";
   if (isProduction) {
     // Check for non-www or non-https or query parameters
     const isNonWww = host && !host.startsWith("www.");

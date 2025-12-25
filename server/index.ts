@@ -16,6 +16,15 @@ declare module "http" {
 // Enable gzip compression for all responses
 app.use(compression());
 
+// Force WWW and HTTPS redirect
+app.use((req, res, next) => {
+  const host = req.get("host");
+  if (process.env.NODE_ENV === "production" && host && !host.startsWith("www.")) {
+    return res.redirect(301, `https://www.instatrainme.com${req.originalUrl}`);
+  }
+  next();
+});
+
 app.use(
   express.json({
     verify: (req, _res, buf) => {

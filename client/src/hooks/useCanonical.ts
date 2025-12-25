@@ -12,7 +12,7 @@ export function useCanonical(path: string) {
     }
     
     // Build the canonical URL (without query parameters)
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.instatrainme.com';
+    const baseUrl = 'https://www.instatrainme.com';
     canonicalLink.href = `${baseUrl}${path}`;
   }, [path]);
 }

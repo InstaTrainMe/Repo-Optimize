@@ -36,7 +36,8 @@ export async function registerRoutes(
   // Handle 301 redirects for legacy URLs
   app.get(["/aboutus", "/about-us"], (req, res) => res.redirect(301, "/about"));
   app.get(["/newsletter1", "/subscribe"], (req, res) => res.redirect(301, "/"));
-  app.get("/howitworks", (req, res) => res.redirect(301, "/benefits"));
+  app.get(["/howitworks", "/how-it-works"], (req, res) => res.redirect(301, "/benefits"));
+  app.get(["/contactus", "/contact-us"], (req, res) => res.redirect(301, "/"));
   app.get(["/privacypolicy", "/privacy-policy"], (req, res) => res.redirect(301, "/privacy"));
   app.get(["/termsandconditions", "/terms-and-conditions"], (req, res) => res.redirect(301, "/terms"));
   

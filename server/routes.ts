@@ -56,7 +56,14 @@ export async function registerRoutes(
   app.get("/trainers/tx", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ia", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/co", (req, res) => res.redirect(301, "/trainers"));
-  app.get("/trainers/hi", (req, res) => res.redirect(301, "/trainers"));
+  2→  app.get("/trainers/hi", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ga", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ok", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/wi", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/in", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/sd", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/mn", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/tx/houston", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ca/san-diego", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ca/los-angeles", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/fl/fort-lauderdale", (req, res) => res.redirect(301, "/trainers"));

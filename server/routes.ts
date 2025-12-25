@@ -43,7 +43,27 @@ export async function registerRoutes(
   // Specific trainer redirects for geographic regions identified in Soft 404 report
   app.get("/trainers/wy", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ne", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/nd", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/nm", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ar", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/me", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ak", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ky", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ut", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ks", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/fl", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/tx", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ia", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/co", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/hi", (req, res) => res.redirect(301, "/trainers"));
   app.get("/trainers/ca/san-diego", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/ca/los-angeles", (req, res) => res.redirect(301, "/trainers"));
+  app.get("/trainers/fl/fort-lauderdale", (req, res) => res.redirect(301, "/trainers"));
+  
+  // Other legacy redirects from GSC report
+  app.get("/services", (req, res) => res.redirect(301, "/benefits"));
+  app.get("/terms-of-service", (req, res) => res.redirect(301, "/terms"));
+  app.get("/waitlistsignup", (req, res) => res.redirect(301, "/"));
 
   // Dynamic sitemap.xml generation
   app.get("/sitemap.xml", async (req, res) => {

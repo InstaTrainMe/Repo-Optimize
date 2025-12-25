@@ -19,7 +19,12 @@ app.use(compression());
 // Force WWW and HTTPS redirect
 app.use((req, res, next) => {
   const host = req.get("host");
-  if (process.env.NODE_ENV === "production" && host && !host.startsWith("www.")) {
+  // Check for non-www or non-https in production
+  const isProduction = process.env.NODE_ENV === "production";
+  const isNonWww = host && !host.startsWith("www.");
+  const isHttp = req.headers["x-forwarded-proto"] && req.headers["x-forwarded-proto"] !== "https";
+
+  if (isProduction && (isNonWww || isHttp)) {
     return res.redirect(301, `https://www.instatrainme.com${req.originalUrl}`);
   }
   next();

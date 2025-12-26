@@ -53,6 +53,7 @@ interface BlogFormData {
   readTime: string;
   imageUrl: string;
   published: boolean;
+  createdAt?: string;
 }
 
 const emptyForm: BlogFormData = {
@@ -63,8 +64,54 @@ const emptyForm: BlogFormData = {
   author: "",
   readTime: "5 min read",
   imageUrl: "",
-  published: false
+  published: false,
+  createdAt: new Date().toISOString().split('T')[0]
 };
+
+// Image processing utility
+async function processBlogImage(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const targetWidth = 1200;
+        const targetHeight = 630;
+        
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return reject('Failed to get context');
+
+        // Calculate aspect ratio and crop from center
+        const imgAspect = img.width / img.height;
+        const targetAspect = targetWidth / targetHeight;
+        
+        let drawWidth, drawHeight, offsetX, offsetY;
+        
+        if (imgAspect > targetAspect) {
+          drawHeight = img.height;
+          drawWidth = img.height * targetAspect;
+          offsetX = (img.width - drawWidth) / 2;
+          offsetY = 0;
+        } else {
+          drawWidth = img.width;
+          drawHeight = img.width / targetAspect;
+          offsetX = 0;
+          offsetY = (img.height - drawHeight) / 2;
+        }
+
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight, 0, 0, targetWidth, targetHeight);
+        resolve(canvas.toDataURL('image/webp', 0.8));
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 export default function BlogAdmin() {
   const { toast } = useToast();
@@ -233,7 +280,8 @@ export default function BlogAdmin() {
       author: post.author,
       readTime: post.readTime,
       imageUrl: post.imageUrl || "",
-      published: post.published
+      published: post.published,
+      createdAt: new Date(post.createdAt).toISOString().split('T')[0]
     });
     setIsEditing(true);
     setEditingId(post.id);
@@ -457,13 +505,45 @@ export default function BlogAdmin() {
 
                   <div className="space-y-2">
                     <Label htmlFor="imageUrl">Image URL (optional)</Label>
-                    <Input
-                      id="imageUrl"
-                      value={formData.imageUrl}
-                      onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                      placeholder="https://example.com/image.jpg"
-                      data-testid="input-image-url"
-                    />
+                    <div className="flex gap-2">
+                      <Input
+                        id="imageUrl"
+                        value={formData.imageUrl}
+                        onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                        placeholder="https://example.com/image.jpg"
+                        className="flex-1"
+                        data-testid="input-image-url"
+                      />
+                      <div className="relative">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          id="file-upload"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              try {
+                                const webpData = await processBlogImage(file);
+                                setFormData({ ...formData, imageUrl: webpData });
+                                toast({ title: "Success", description: "Image optimized to 1200x630 WebP" });
+                              } catch (err) {
+                                toast({ title: "Error", description: "Failed to process image", variant: "destructive" });
+                              }
+                            }
+                          }}
+                        />
+                        <Button 
+                          type="button" 
+                          variant="outline" 
+                          size="icon"
+                          onClick={() => document.getElementById('file-upload')?.click()}
+                          title="Upload and optimize image"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
                     {formData.imageUrl && (
                       <div className="mt-2 rounded-lg overflow-hidden border border-border">
                         <img 
@@ -474,6 +554,18 @@ export default function BlogAdmin() {
                         />
                       </div>
                     )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="createdAt">Publish Date (Backdating)</Label>
+                    <Input
+                      id="createdAt"
+                      type="date"
+                      value={formData.createdAt}
+                      onChange={(e) => setFormData({ ...formData, createdAt: e.target.value })}
+                      required
+                      data-testid="input-created-at"
+                    />
                   </div>
 
                   <div className="space-y-2">

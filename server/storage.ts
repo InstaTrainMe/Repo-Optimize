@@ -160,7 +160,8 @@ export class DatabaseStorage implements IStorage {
 
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
     const slug = generateSlug(insertPost.title);
-    const [post] = await db.insert(blogPosts).values({ ...insertPost, slug }).returning();
+    const createdAt = insertPost.createdAt ? new Date(insertPost.createdAt) : new Date();
+    const [post] = await db.insert(blogPosts).values({ ...insertPost, slug, createdAt }).returning();
     return post;
   }
 

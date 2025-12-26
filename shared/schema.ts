@@ -87,7 +87,8 @@ export const blogPosts = pgTable("blog_posts", {
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
   slug: true,
-  createdAt: true,
+}).extend({
+  createdAt: z.string().optional().or(z.date().optional()),
 });
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;

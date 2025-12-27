@@ -60,7 +60,7 @@ function ThemeToggle() {
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-end items-center text-center px-5 pb-24 pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-end items-center text-center px-5 pb-8 pt-20 overflow-hidden">
       <video
         autoPlay
         loop

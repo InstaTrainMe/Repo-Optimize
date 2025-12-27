@@ -6,6 +6,7 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 
 ## Recent Changes (December 2025)
 
+- **H1 Tag Fix**: Added proper H1 tags to home page hero section ("Find Personal Trainers Near You") and blog listing page ("Fitness Tips & News") to resolve "H1 tag missing or empty" GSC issue.
 - **Orphan Page Fix**: Fixed "Orphan page (has no incoming internal links)" GSC issue by converting all navigation and blog listing items to use proper HTML anchor tags (`<Link>`) instead of JavaScript onClick handlers. This makes internal links visible to crawlers.
 - **Non-Canonical Page Fix**: Fixed "Non-canonical page in sitemap" GSC issue by updating all canonical URLs, og:url, and structured data to use `https://www.instatrainme.com` consistently across index.html, blog.tsx, and home.tsx.
 - **Blog Date Customization**: Added ability to backdate blog posts via the admin interface. This allows backfilling past events and marketing milestones.

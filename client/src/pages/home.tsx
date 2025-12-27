@@ -75,6 +75,12 @@ function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       <ThemeToggle />
       <div className="relative z-10 max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" data-testid="text-hero-title">
+          Find Personal Trainers Near You
+        </h1>
+        <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          Connect instantly with certified personal trainers, yoga instructors, and fitness coaches. Train anywhere - virtual or in-person.
+        </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Dialog>
             <DialogTrigger asChild>

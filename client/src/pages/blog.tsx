@@ -423,9 +423,9 @@ export default function Blog() {
       <main className="max-w-6xl mx-auto px-5 py-12">
         <div className="text-center mb-12">
           <div className="flex justify-center items-center gap-3 mb-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="text-blog-title">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground" data-testid="text-blog-title">
               Fitness Tips & News
-            </h2>
+            </h1>
             <Button 
               variant="ghost" 
               size="icon" 

@@ -945,7 +945,7 @@ function SocialShareButtons() {
   return (
     <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3">
       <a
-        href="https://twitter.com/share?url=https://instatrainme.com&text=Check out InstaTrainMe - Find Personal Trainers Near You!"
+        href="https://twitter.com/share?url=https://www.instatrainme.com&text=Check out InstaTrainMe - Find Personal Trainers Near You!"
         target="_blank"
         rel="noopener noreferrer"
         className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-[#667eea] hover:text-white transition-all group"
@@ -954,7 +954,7 @@ function SocialShareButtons() {
         <Twitter className="w-4 h-4 text-[#667eea] group-hover:text-white" />
       </a>
       <a
-        href="https://wa.me/?text=Check out InstaTrainMe - Find Personal Trainers Near You! https://instatrainme.com"
+        href="https://wa.me/?text=Check out InstaTrainMe - Find Personal Trainers Near You! https://www.instatrainme.com"
         target="_blank"
         rel="noopener noreferrer"
         className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all group"

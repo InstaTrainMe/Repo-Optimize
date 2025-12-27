@@ -6,6 +6,7 @@ Instatrainme® is a fitness platform landing page that connects users with certi
 
 ## Recent Changes (December 2025)
 
+- **Non-Canonical Page Fix**: Fixed "Non-canonical page in sitemap" GSC issue by updating all canonical URLs, og:url, and structured data to use `https://www.instatrainme.com` consistently across index.html, blog.tsx, and home.tsx.
 - **Blog Date Customization**: Added ability to backdate blog posts via the admin interface. This allows backfilling past events and marketing milestones.
 - **Image Optimization**: Integrated client-side image processing that automatically crops and converts uploaded blog images to 1200x630px WebP format for optimal performance and SEO.
 - **Blog Slug Generation**: All blog posts automatically generate clean URL-friendly slugs from titles (3 existing posts migrated, new posts auto-generate). Slugs enable better readability and SEO compared to numeric IDs.

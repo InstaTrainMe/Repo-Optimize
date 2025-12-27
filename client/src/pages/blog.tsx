@@ -34,12 +34,12 @@ const defaultMeta = {
   ogTitle: "InstaTrainMe® - Find Certified Personal Trainers Near You",
   ogDescription: "Connect with certified trainers instantly. Book on-demand or scheduled sessions. Train anywhere - virtual or in-person. 500+ certified trainers, 50K+ sessions completed.",
   ogType: "website",
-  ogUrl: "https://instatrainme.com",
-  ogImage: "https://instatrainme.com/og-image.png",
+  ogUrl: "https://www.instatrainme.com/blog",
+  ogImage: "https://www.instatrainme.com/og-image.png",
   twitterTitle: "InstaTrainMe® - Find Certified Personal Trainers",
   twitterDescription: "Connect with certified trainers instantly. Book on-demand sessions. Train anywhere!",
   twitterCard: "summary_large_image",
-  twitterImage: "https://instatrainme.com/og-image.png"
+  twitterImage: "https://www.instatrainme.com/og-image.png"
 };
 
 function SEOHead({ post }: { post?: DisplayPost }) {
@@ -51,9 +51,9 @@ function SEOHead({ post }: { post?: DisplayPost }) {
 
     if (post) {
       const postUrl = post.slug 
-        ? `https://instatrainme.com/blog/${post.slug}`
-        : `https://instatrainme.com/blog/${post.id}`;
-      const postImage = "https://instatrainme.com/og-blog.png";
+        ? `https://www.instatrainme.com/blog/${post.slug}`
+        : `https://www.instatrainme.com/blog/${post.id}`;
+      const postImage = "https://www.instatrainme.com/og-blog.png";
       
       // Trim description to 160 chars to prevent truncation in search results
       const trimmedDescription = post.excerpt.length > 160 
@@ -83,7 +83,7 @@ function SEOHead({ post }: { post?: DisplayPost }) {
         "url": postUrl,
         "author": { "@type": "Person", "name": post.author },
         "datePublished": new Date(post.createdAt).toISOString(),
-        "publisher": { "@type": "Organization", "name": "InstaTrainMe", "url": "https://instatrainme.com" },
+        "publisher": { "@type": "Organization", "name": "InstaTrainMe", "url": "https://www.instatrainme.com" },
         "articleSection": post.category
       };
 
@@ -294,8 +294,8 @@ export default function Blog() {
   useEffect(() => {
     if (selectedPost) {
       const url = selectedPost.slug 
-        ? `https://instatrainme.com/blog/${selectedPost.slug}`
-        : `https://instatrainme.com/blog/${selectedPost.id}`;
+        ? `https://www.instatrainme.com/blog/${selectedPost.slug}`
+        : `https://www.instatrainme.com/blog/${selectedPost.id}`;
       const canonical = document.querySelector("link[rel='canonical']");
       if (canonical) {
         canonical.setAttribute("href", url);
@@ -308,11 +308,11 @@ export default function Blog() {
     } else {
       const canonical = document.querySelector("link[rel='canonical']");
       if (canonical) {
-        canonical.setAttribute("href", "https://instatrainme.com/blog");
+        canonical.setAttribute("href", "https://www.instatrainme.com/blog");
       } else {
         const link = document.createElement("link");
         link.rel = "canonical";
-        link.href = "https://instatrainme.com/blog";
+        link.href = "https://www.instatrainme.com/blog";
         document.head.appendChild(link);
       }
     }

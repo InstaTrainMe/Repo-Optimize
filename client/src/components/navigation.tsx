@@ -33,25 +33,28 @@ export function Navigation() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="max-w-6xl mx-auto flex h-16 items-center justify-between px-5 gap-4">
-        <button 
-          onClick={() => setLocation("/")}
+        <Link 
+          href="/"
           className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2] cursor-pointer border-0 bg-transparent" 
           data-testid="link-logo"
         >
           InstaTrainMe<span className="text-[#667eea]">®</span>
-        </button>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-1" data-testid="nav-desktop">
           {navLinks.map((link) => (
-            <Button
+            <Link
               key={link.href}
-              variant={location === link.href ? "secondary" : "ghost"}
-              className="font-medium"
-              onClick={() => handleNavClick(link.href)}
+              href={link.href}
               data-testid={`nav-link-${link.label.toLowerCase()}`}
             >
-              {link.label}
-            </Button>
+              <Button
+                variant={location === link.href ? "secondary" : "ghost"}
+                className="font-medium"
+              >
+                {link.label}
+              </Button>
+            </Link>
           ))}
         </nav>
 
@@ -157,15 +160,19 @@ export function Navigation() {
             <SheetContent side="right" className="w-[280px] sm:w-[350px]">
               <nav className="flex flex-col gap-4 mt-8" data-testid="nav-mobile">
                 {navLinks.map((link) => (
-                  <Button
+                  <Link
                     key={link.href}
-                    variant={location === link.href ? "secondary" : "ghost"}
-                    className="w-full justify-start font-medium text-lg"
-                    onClick={() => handleNavClick(link.href)}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
                     data-testid={`nav-mobile-link-${link.label.toLowerCase()}`}
                   >
-                    {link.label}
-                  </Button>
+                    <Button
+                      variant={location === link.href ? "secondary" : "ghost"}
+                      className="w-full justify-start font-medium text-lg"
+                    >
+                      {link.label}
+                    </Button>
+                  </Link>
                 ))}
                 <div className="pt-4 border-t">
                   <Dialog>

@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, User, Moon, Sun, Settings } from "lucide-react";
 import { ShareButtons } from "@/components/share-buttons";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useTheme } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import DOMPurify from "isomorphic-dompurify";
@@ -324,15 +324,15 @@ export default function Blog() {
         <SEOHead post={selectedPost} />
         <Navigation />
         <div className="max-w-4xl mx-auto px-5 py-4">
-          <Button 
-            variant="ghost" 
-            onClick={() => setLocation("/blog")}
-            aria-label="Go back to blog listing"
-            data-testid="button-back"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
-            Back to Blog
-          </Button>
+          <Link href="/blog" data-testid="button-back">
+            <Button 
+              variant="ghost" 
+              aria-label="Go back to blog listing"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
+              Back to Blog
+            </Button>
+          </Link>
         </div>
         <main className="max-w-4xl mx-auto px-5 py-12">
           <article>
@@ -397,18 +397,15 @@ export default function Blog() {
                     .filter(p => p.id !== selectedPost.id && p.category === selectedPost.category)
                     .slice(0, 2)
                     .map((relatedPost) => (
-                      <button
+                      <Link
                         key={relatedPost.id}
-                        onClick={() => {
-                          const url = relatedPost.slug ? `/blog/${relatedPost.slug}` : `/blog/${relatedPost.id}`;
-                          setLocation(url);
-                        }}
-                        className="text-left p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors"
+                        href={relatedPost.slug ? `/blog/${relatedPost.slug}` : `/blog/${relatedPost.id}`}
+                        className="text-left p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors block"
                         data-testid={`link-related-${relatedPost.id}`}
                       >
                         <p className="font-semibold text-foreground hover:text-[#667eea]">{relatedPost.title}</p>
                         <p className="text-sm text-muted-foreground mt-2">{relatedPost.excerpt.substring(0, 80)}...</p>
-                      </button>
+                      </Link>
                     ))}
                 </div>
               </div>
@@ -445,46 +442,47 @@ export default function Blog() {
         </div>
         <div className="grid md:grid-cols-2 gap-8">
           {blogPosts.map((post) => (
-            <Card
+            <Link
               key={post.id}
-              className="border-0 shadow-lg transition-all duration-300 hover:-translate-y-2 cursor-pointer group"
-              onClick={() => {
-                const url = post.slug ? `/blog/${post.slug}` : `/blog/${post.id}`;
-                setLocation(url);
-              }}
-              data-testid={`card-blog-${post.id}`}
+              href={post.slug ? `/blog/${post.slug}` : `/blog/${post.id}`}
+              className="block"
             >
-              {post.imageUrl && (
-                <div className="w-full h-48 overflow-hidden">
-                  <img 
-                    src={post.imageUrl} 
-                    alt={post.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              )}
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-[#667eea]/10 to-[#764ba2]/10 text-[#667eea]">
-                    {post.category}
-                  </span>
-                  <span className="text-xs text-muted-foreground">{post.readTime}</span>
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-[#667eea] transition-colors">
-                  {post.title}
-                </h3>
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {post.excerpt}
-                </p>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground flex items-center gap-2">
-                    <User className="w-4 h-4" />
-                    {post.author}
-                  </span>
-                  <span className="text-muted-foreground">{formatDate(post.createdAt)}</span>
-                </div>
-              </CardContent>
-            </Card>
+              <Card
+                className="border-0 shadow-lg transition-all duration-300 hover:-translate-y-2 cursor-pointer group h-full"
+                data-testid={`card-blog-${post.id}`}
+              >
+                {post.imageUrl && (
+                  <div className="w-full h-48 overflow-hidden">
+                    <img 
+                      src={post.imageUrl} 
+                      alt={post.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-[#667eea]/10 to-[#764ba2]/10 text-[#667eea]">
+                      {post.category}
+                    </span>
+                    <span className="text-xs text-muted-foreground">{post.readTime}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-[#667eea] transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-4 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground flex items-center gap-2">
+                      <User className="w-4 h-4" />
+                      {post.author}
+                    </span>
+                    <span className="text-muted-foreground">{formatDate(post.createdAt)}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       </main>

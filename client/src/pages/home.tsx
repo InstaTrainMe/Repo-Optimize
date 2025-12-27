@@ -60,7 +60,7 @@ function ThemeToggle() {
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-end items-center text-center px-5 pb-24 pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-5 py-20 overflow-hidden">
       <video
         autoPlay
         loop
@@ -72,13 +72,13 @@ function HeroSection() {
       >
         <source src="/hero-background.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-black/60" />
       <ThemeToggle />
-      <div className="relative z-10 max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" data-testid="text-hero-title">
+      <div className="relative z-10 max-w-4xl mx-auto bg-black/40 backdrop-blur-sm rounded-2xl p-8 md:p-12">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight" data-testid="text-hero-title">
           Find Personal Trainers Near You
         </h1>
-        <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+        <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 md:mb-8 max-w-2xl mx-auto">
           Connect instantly with certified personal trainers, yoga instructors, and fitness coaches. Train anywhere - virtual or in-person.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

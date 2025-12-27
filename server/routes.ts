@@ -299,12 +299,12 @@ export async function registerRoutes(
 
   app.patch("/api/blog/:id", isAuthenticated, isAdmin, async (req, res) => {
     try {
-      const body = req.body;
+      const body = { ...req.body };
       if (body.createdAt && typeof body.createdAt === 'string') {
         body.createdAt = new Date(body.createdAt);
       }
-      const updates = insertBlogPostSchema.partial().parse(body);
-      const post = await storage.updateBlogPost(req.params.id, updates);
+      const parsed = insertBlogPostSchema.partial().parse(body);
+      const post = await storage.updateBlogPost(req.params.id, parsed as any);
       if (!post) {
         res.status(404).json({ error: "Blog post not found" });
         return;

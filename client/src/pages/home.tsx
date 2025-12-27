@@ -72,7 +72,7 @@ function HeroSection() {
       >
         <source src="/hero-background.mp4" type="video/mp4" />
       </video>
-      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
       <ThemeToggle />
       <div className="relative z-10 max-w-4xl mx-auto">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight drop-shadow-lg" data-testid="text-hero-title">
